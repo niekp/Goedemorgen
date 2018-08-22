@@ -1,3 +1,6 @@
+#ifndef _BRON_H
+#define _BRON_H
+
 #pragma once
 #include <string>
 
@@ -14,3 +17,5 @@ class Bron
 		string text;
 		bool hasText;
 };
+
+#endif

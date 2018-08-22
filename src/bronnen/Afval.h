@@ -1,6 +1,9 @@
-#pragma once
+#ifndef _AFVAL_H
+#define _AFVAL_H
+
 #include <string>
 #include <map>
+
 #include "Bron.h"
 
 using namespace std;
@@ -19,3 +22,5 @@ class Afval : public Bron
 		map<int, string> afvalDag;
 		map<int, string>::iterator itVandaag;
 };
+
+#endif

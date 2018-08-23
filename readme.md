@@ -4,7 +4,7 @@ Een probeersel om een 'goedemorgen' bericht te genereren aan de hand van een aan
 ## Todo
 - [x] Afval
 - [x] Downtime pi > 3 uur?
-- [ ] Config file
+- [x] Config file
 - [ ] Weer -> Korte broek / kleding advies
 - [ ] Notities / todo file vandaag, algemeen en gemist afgelopen dagen
 - [ ] Agenda vandaag

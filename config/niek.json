@@ -1,0 +1,10 @@
+{
+  "Afval": {
+	"0": "Plastic",
+	"3": "Papier"
+  },
+  "DowntimePi": {
+  	"url": "https://niekpijp.nl/pingserver/ping.json",
+  	"uur": "3"
+  }
+}

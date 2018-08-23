@@ -5,7 +5,8 @@ Een probeersel om een 'goedemorgen' bericht te genereren aan de hand van een aan
 - [x] Afval
 - [x] Downtime pi > 3 uur?
 - [x] Config file
-- [ ] Weer -> Korte broek / kleding advies
+- [x] Weer
+	- [ ] Praktische informatie als regen / kortebroek / trui
 - [ ] Notities / todo file vandaag, algemeen en gemist afgelopen dagen
 - [ ] Agenda vandaag
 - [ ] Backup mislukt?

@@ -1,6 +1,7 @@
 from Config import Config
 from modules import Afval
 from modules import Downtime
+from modules import Weer
 
 print "# Goedemorgen"
 
@@ -15,6 +16,10 @@ if "Afval" in config:
 
 if "Downtime" in config:
 	modules.append(Downtime(config["Downtime"]))
+
+if "Weer" in config:
+	modules.append(Weer(config["Weer"]))
+
 
 # Modules uitvoeren
 for module in modules:

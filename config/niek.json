@@ -7,5 +7,9 @@
   	"url": "https://niekpijp.nl/pingserver/ping.json",
   	"uur": "3",
   	"server": "backup_pi"
+  },
+  "Weer": {
+  	"lang": 52.994830,
+  	"long": 6.559150
   }
 }

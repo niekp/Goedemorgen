@@ -1,14 +1,11 @@
 from Config import Config
 from modules import Afval
-from modules import DowntimePi
+from modules import Downtime
 
 print "# Goedemorgen"
 
-
 # Config inlezen
 config = Config("niek").GetConfig()
-
-
 
 # Modules toevoegen
 modules = []
@@ -16,8 +13,8 @@ modules = []
 if "Afval" in config:
 	modules.append(Afval(config["Afval"]))
 
-if "DowntimePi" in config:
-	modules.append(DowntimePi(config["DowntimePi"]))
+if "Downtime" in config:
+	modules.append(Downtime(config["Downtime"]))
 
 # Modules uitvoeren
 for module in modules:

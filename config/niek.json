@@ -3,8 +3,9 @@
 	"0": "Plastic",
 	"3": "Papier"
   },
-  "DowntimePi": {
+  "Downtime": {
   	"url": "https://niekpijp.nl/pingserver/ping.json",
-  	"uur": "3"
+  	"uur": "3",
+  	"server": "backup_pi"
   }
 }

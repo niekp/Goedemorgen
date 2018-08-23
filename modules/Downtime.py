@@ -1,17 +1,17 @@
 from modules import Module
 import urllib, json, time
 
-class DowntimePi(Module):
+class Downtime(Module):
 	def __init__(self, config):
 		self.hasText = False
 		self.text = "";
 
-		# Op deze URL verwacht het script een JSON file met minimaal: { "backup_pi": { "ping": timestamp } }
+		# Op deze URL verwacht het script een JSON file met minimaal: { "server": { "ping": timestamp } }
 		response = urllib.urlopen(config["url"]);
 		ping = json.loads(response.read());
 
 		# Pak de laatste ping
-		lastPing = ping["backup_pi"]["ping"]
+		lastPing = ping[config["server"]]["ping"]
 
 		# Vergelijk deze met de timestamp van nu
 		now = round(time.time())
@@ -25,7 +25,7 @@ class DowntimePi(Module):
 
 
 	def HasText(self):
-		return super(DowntimePi, self).HasText()
+		return super(Downtime, self).HasText()
 
 	def GetText(self):
-		return super(DowntimePi, self).GetText()
+		return super(Downtime, self).GetText()

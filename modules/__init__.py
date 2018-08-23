@@ -1,4 +1,4 @@
-from modules.Module import Module
+from modules._Module import _Module
 
 from modules.Afval import Afval
 from modules.Downtime import Downtime

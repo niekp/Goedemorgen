@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
-class Module(object):
+class _Module(object):
 	__metaclass__ = ABCMeta
 
 	@abstractmethod

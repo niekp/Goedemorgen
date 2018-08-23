@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import datetime, json
-from modules import Module
+from modules import _Module
 import urllib, json, time
 
-class Weer(Module):
+class Weer(_Module):
 
 	def __init__(self, config):
 		self.hasText = True

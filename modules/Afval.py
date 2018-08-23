@@ -1,7 +1,7 @@
 import datetime, json
-from modules import Module
+from modules import _Module
 
-class Afval(Module):
+class Afval(_Module):
 
 	def __init__(self, config):
 		self.hasText = False

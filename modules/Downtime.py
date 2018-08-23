@@ -1,7 +1,7 @@
-from modules import Module
+from modules import _Module
 import urllib, json, time
 
-class Downtime(Module):
+class Downtime(_Module):
 	def __init__(self, config):
 		self.hasText = False
 		self.text = "";

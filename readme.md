@@ -7,6 +7,7 @@ Een probeersel om een 'goedemorgen' bericht te genereren aan de hand van een aan
 - [x] Config file
 - [x] Weer
 	- [ ] Praktische informatie als regen / kortebroek / trui
+- [x] De informatie mailen
 - [ ] Notities / todo file vandaag, algemeen en gemist afgelopen dagen
 - [ ] Agenda vandaag
 - [ ] Backup mislukt?

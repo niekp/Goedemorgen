@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
 from Config import Config
+from Email import Email
 from modules import Afval
 from modules import Downtime
 from modules import Weer
 
-print "# Goedemorgen"
+text = "# Goedemorgen\n"
 
 # Config inlezen
 config = Config("niek").GetConfig()
@@ -24,4 +26,11 @@ if "Weer" in config:
 # Modules uitvoeren
 for module in modules:
 	if (module.HasText()):
-		print module.GetText();
+		text += module.GetText() + "\n\n";
+
+print text.encode('utf-8')
+
+if "Email" in config:
+	email = Email(config["Email"])
+
+	email.Send(text)

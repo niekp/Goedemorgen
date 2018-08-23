@@ -1,7 +1,7 @@
 {
   "Afval": {
-	"0": "Plastic",
-	"3": "Papier"
+	"0": "plastic",
+	"3": "papier"
   },
   "Downtime": {
   	"url": "https://niekpijp.nl/pingserver/ping.json",
@@ -11,5 +11,8 @@
   "Weer": {
   	"lang": 52.994830,
   	"long": 6.559150
+  },
+  "Email": {
+  	"emailadres": "goedemorgen@niekpijp.nl"
   }
 }

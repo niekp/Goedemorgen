@@ -4,13 +4,13 @@
 		"3": "papier"
 	},
 	"Downtime": {
-		"url": "https://niekpijp.nl/pingserver/ping.json",
+		"url": "https://domain.com/pingserver/ping.json",
 		"uur": "3",
-		"server": "backup_pi"
+		"server": "backup_server"
 	},
 	"Weer": {
-		"lang": 52.994830,
-		"long": 6.559150,
+		"lang": 00.000000,
+		"long": 0.000000,
 		"tijden": {
 			"0": [8, 17],
 			"1": [8, 17],
@@ -23,7 +23,7 @@
 
 	},
 	"Email": {
-		"emailadres": "goedemorgen@niekpijp.nl"
+		"emailadres": "email@domain.com"
 	},
 	"Runtime": {}
 }

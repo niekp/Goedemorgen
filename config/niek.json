@@ -1,18 +1,29 @@
 {
-  "Afval": {
-	"0": "plastic",
-	"3": "papier"
-  },
-  "Downtime": {
-  	"url": "https://niekpijp.nl/pingserver/ping.json",
-  	"uur": "3",
-  	"server": "backup_pi"
-  },
-  "Weer": {
-  	"lang": 52.994830,
-  	"long": 6.559150
-  },
-  "Email": {
-  	"emailadres": "goedemorgen@niekpijp.nl"
-  }
+	"Afval": {
+		"0": "plastic",
+		"3": "papier"
+	},
+	"Downtime": {
+		"url": "https://niekpijp.nl/pingserver/ping.json",
+		"uur": "3",
+		"server": "backup_pi"
+	},
+	"Weer": {
+		"lang": 52.994830,
+		"long": 6.559150,
+		"tijden": {
+			"0": [8, 17],
+			"1": [8, 17],
+			"2": [8, 17],
+			"3": [8, 17],
+			"4": [8, 17],
+			"5": [10, 14, 22],
+			"6": [10, 14, 22]
+		}
+
+	},
+	"Email": {
+		"emailadres": "goedemorgen@niekpijp.nl"
+	},
+	"Runtime": {}
 }

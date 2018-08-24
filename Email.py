@@ -4,13 +4,14 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 class Email:
-	def __init__(self, config):
-		self.emailadres = config["emailadres"]
+	def __init__(self, config_all):
+		self.config = config_all
+		self.emailadres = config_all["Email"]["emailadres"]
 
 	def Send(self, text):
 		# Geheimen inladen
-		domain = open("secrets/email_domain.txt", "r").read()
-		password = open("secrets/email_password.txt", "r").read()
+		domain = self.config["Runtime"]["secrets"]["email_domain"]
+		password = self.config["Runtime"]["secrets"]["email_password"]
 
 		# Verbind met mailserver
 		mailserver = smtplib.SMTP("mail." + domain);
@@ -30,7 +31,7 @@ class Email:
 		message.attach(MIMEText(html, "plain", "utf-8"));
 
 		# E-mail versturen
-		mailserver.sendmail("noreply@" + domain, self.emailadres, message.as_string())
+		#mailserver.sendmail("noreply@" + domain, self.emailadres, message.as_string())
 
 		# Verbinding sluiten
 		mailserver.close();

@@ -3,9 +3,11 @@ from modules import _Module
 
 class Afval(_Module):
 
-	def __init__(self, config):
+	def __init__(self, config_full):
 		self.hasText = False
 		self.text = "";
+
+		config = config_full["Downtime"]
 
 		# Dag van vandaag
 		weekday = datetime.datetime.today().weekday()

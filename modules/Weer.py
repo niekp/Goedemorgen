@@ -1,22 +1,36 @@
 # -*- coding: utf-8 -*-
 import datetime, json
 import urllib.request
+import os.path
 
 from modules import _Module
 
 class Weer(_Module):
 
-	def __init__(self, config):
+	def __init__(self, config_full):
 		self.hasText = True
 		self.text = "";
+		config = config_full["Weer"]
 
 		# Een textfile met de API-key. Met name om de key uit git te houden, en niet te hardcoden.
-		apikey = open("secrets/darksky_apikey.txt", "r").read()
+		apikey = config_full["Runtime"]["secrets"]["darksky_apikey"]
 
-		# Bouw de URL voor de API-call op en maak een weer object
+		# Cache de API verzoeken in een map per dag.
+		filename = "{0}/Weer{1}_{2}.json".format(config_full["Runtime"]["datadir"], str(config["lang"]), str(config["long"]))
 
-		with urllib.request.urlopen("https://api.darksky.net/forecast/{0}/{1},{2}?units=si".format(apikey, str(config["lang"]), str(config["long"]))) as url:
-			weather = json.loads(url.read())
+		if os.path.exists(filename):
+			data = open(filename).read()
+
+		else:
+			# Bouw de URL voor de API-call op en maak een weer object
+			with urllib.request.urlopen("https://api.darksky.net/forecast/{0}/{1},{2}?units=si".format(apikey, str(config["lang"]), str(config["long"]))) as url:
+				data = url.read()
+			
+			with open(filename, 'w') as outfile:
+				json.dump(json.loads(data), outfile)
+			
+
+		weather = json.loads(data)
 
 		# Tekst opbouwen
 		self.text = u"Het is nu {0}° en het wordt vandaag tussen de {1}° en {2}°".format(

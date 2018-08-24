@@ -4,9 +4,11 @@ import urllib.request
 from modules import _Module
 
 class Downtime(_Module):
-	def __init__(self, config):
+	def __init__(self, config_full):
 		self.hasText = False
 		self.text = "";
+
+		config = config_full["Downtime"]
 
 		# Op deze URL verwacht het script een JSON file met minimaal: { "server": { "ping": timestamp } }
 		with urllib.request.urlopen(config["url"]) as url:

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os, datetime, json
+import os, datetime, json, locale
 import sys
 
 from Config import Config
@@ -14,7 +14,10 @@ if not os.path.isdir(datadir):
 
 
 # Config inlezen
-config = Config("test").GetConfig()
+config = Config("niek").GetConfig()
+
+if 'Locale' in config:
+	locale.setlocale(locale.LC_TIME, '{0}.UTF-8'.format(config["Locale"]))
 
 # Config extenden met runtime variabelen
 with open('secrets/secrets.json') as secrets:    
@@ -31,6 +34,9 @@ if "Downtime" in config:
 
 if "Weer" in config:
 	modules.append(Weer(config))
+
+if "Agenda" in config:
+	modules.append(Agenda(config))
 
 
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*

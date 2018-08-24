@@ -1,4 +1,5 @@
 {
+	"Locale": "nl_NL",
 	"Afval": {
 		"0": "plastic",
 		"3": "papier"
@@ -21,6 +22,12 @@
 			"6": [10, 14, 22]
 		}
 
+	},
+	"Agenda": {
+		"url": "https://user:pass@domain.com/remote.php/dav/",
+		"calendars": [
+			"Personal", "Sport", "Birthdays"
+		]
 	},
 	"Email": {
 		"emailadres": "email@domain.com"

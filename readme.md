@@ -9,7 +9,7 @@ Een probeersel om een 'goedemorgen' bericht te genereren aan de hand van een aan
 	- [ ] Praktische informatie als regen / kortebroek / trui
 - [x] De informatie mailen
 - [ ] Notities / todo file vandaag, algemeen en gemist afgelopen dagen
-- [ ] Agenda vandaag
+- [x] Agenda vandaag
 - [ ] Backup mislukt?
 
 ## Ideeen
@@ -18,3 +18,10 @@ Een probeersel om een 'goedemorgen' bericht te genereren aan de hand van een aan
 - [ ] Nieuwe muziek releases op basis van spotify API of [muspy](https://muspy.com/) feed.
 - [ ] Nieuwe afleveringen van podcast, of elke RSS-feed is dan mogelijk
 - [ ] ANWB API, file informatie
+
+## Dependencies
+python3.6.5
+
+```bash
+pip3 install caldav
+```

@@ -31,7 +31,7 @@ class Email:
 		message.attach(MIMEText(html, "plain", "utf-8"));
 
 		# E-mail versturen
-		#mailserver.sendmail("noreply@" + domain, self.emailadres, message.as_string())
+		mailserver.sendmail("noreply@" + domain, self.emailadres, message.as_string())
 
 		# Verbinding sluiten
 		mailserver.close();

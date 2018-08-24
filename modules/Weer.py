@@ -32,11 +32,38 @@ class Weer(_Module):
 
 		weather = json.loads(data)
 
-		# Tekst opbouwen
-		self.text = u"Het is nu {0}° en het wordt vandaag tussen de {1}° en {2}°".format(
-			weather["currently"]["temperature"], 
-			weather["daily"]["data"][0]["temperatureLow"], 
-			weather["daily"]["data"][0]["temperatureHigh"])
+		# Weerbericht opbouwen op basis van voorkeurs tijden.
+		if "tijden" in config:
+			text_builder = u"Het is nu {0}°\n".format(weather["currently"]["temperature"]);
+
+			weekday = datetime.datetime.today().weekday()
+
+			# Wil je vandaag een voorspelling?
+			if str(weekday) in config["tijden"]:
+				# Voor elk uur de voorspelling opzoeken
+				for data in weather["hourly"]["data"]:
+					hour = datetime.datetime.utcfromtimestamp(data["time"]).hour
+					day = datetime.datetime.utcfromtimestamp(data["time"]).day
+
+					# Alleen de voorspelling van vandaag gebruiken
+					if day == datetime.datetime.today().day:
+
+						# Staat het uur in de gewenste tijden?
+						if hour in config["tijden"][str(weekday)]:
+							# Text opbouwen per tijd.
+							text_builder += "Om {0} uur is het {1}°\n".format(hour, data["temperature"])
+
+				self.text = text_builder
+
+			else:
+				self.hasText = False
+
+		else:
+			# Standaard tekst
+			self.text = u"Het is nu {0}° en het wordt vandaag tussen de {1}° en {2}°".format(
+				weather["currently"]["temperature"], 
+				weather["daily"]["data"][0]["temperatureLow"], 
+				weather["daily"]["data"][0]["temperatureHigh"])
 
 	def HasText(self):
 		return super(Weer, self).HasText()

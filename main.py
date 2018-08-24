@@ -13,10 +13,8 @@ if not os.path.isdir(datadir):
 	os.makedirs(datadir)
 
 
-text = "# Goedemorgen\n"
-
 # Config inlezen
-config = Config("niek").GetConfig()
+config = Config("test").GetConfig()
 
 # Config extenden met runtime variabelen
 with open('secrets/secrets.json') as secrets:    
@@ -34,6 +32,9 @@ if "Downtime" in config:
 if "Weer" in config:
 	modules.append(Weer(config))
 
+
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+text = "# Goedemorgen\n"
 
 # Modules uitvoeren
 for module in modules:

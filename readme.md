@@ -15,3 +15,6 @@ Een probeersel om een 'goedemorgen' bericht te genereren aan de hand van een aan
 ## Ideeen
 - [ ] Top artiest last.fm gisteren
 - [ ] Nieuwe afleveringen vandaag / trakt of sonarr
+- [ ] Nieuwe muziek releases op basis van spotify API of [muspy](https://muspy.com/) feed.
+- [ ] Nieuwe afleveringen van podcast, of elke RSS-feed is dan mogelijk
+- [ ] ANWB API, file informatie

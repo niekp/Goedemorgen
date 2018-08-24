@@ -13,14 +13,11 @@ class Email:
 		password = open("secrets/email_password.txt", "r").read()
 
 		# Verbind met mailserver
-		try:
-		   mailserver = smtplib.SMTP("mail." + domain);
-		   mailserver.ehlo();
-		   mailserver.starttls();
-		   mailserver.ehlo();
-		   mailserver.login('noreply@'+ domain, password);
-		except Exception as e:
-		   print e;
+		mailserver = smtplib.SMTP("mail." + domain);
+		mailserver.ehlo();
+		mailserver.starttls();
+		mailserver.ehlo();
+		mailserver.login('noreply@'+ domain, password);
 
 		# Mailbericht opbouwen
 		message = MIMEMultipart('alternative')
@@ -37,6 +34,3 @@ class Email:
 
 		# Verbinding sluiten
 		mailserver.close();
-
-
-		print "Goedemorgen verstuurd naar " + self.emailadres

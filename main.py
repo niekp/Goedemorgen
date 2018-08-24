@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from Config import Config
 from Email import Email
-from modules import Afval
-from modules import Downtime
-from modules import Weer
+
+from modules import *
 
 text = "# Goedemorgen\n"
 
@@ -28,7 +27,7 @@ for module in modules:
 	if (module.HasText()):
 		text += module.GetText() + "\n\n";
 
-print text.encode('utf-8')
+print(text)
 
 if "Email" in config:
 	email = Email(config["Email"])

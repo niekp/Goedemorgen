@@ -1,5 +1,7 @@
+import json, time
+import urllib.request
+
 from modules import _Module
-import urllib, json, time
 
 class Downtime(_Module):
 	def __init__(self, config):
@@ -7,8 +9,10 @@ class Downtime(_Module):
 		self.text = "";
 
 		# Op deze URL verwacht het script een JSON file met minimaal: { "server": { "ping": timestamp } }
-		response = urllib.urlopen(config["url"]);
-		ping = json.loads(response.read());
+		with urllib.request.urlopen(config["url"]) as url:
+			response = url.read()
+
+		ping = json.loads(response);
 
 		# Pak de laatste ping
 		lastPing = ping[config["server"]]["ping"]

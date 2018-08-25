@@ -54,9 +54,7 @@ class Agenda(_Module):
 					start = event.instance.vevent.dtstart.__str__()
 					summary = event.instance.vevent.summary.__str__()
 					# Zo kan het ook.
-					summary = summary.replace("<SUMMARY{}", "")[:-1]
-					# Dit komt binnen: <DTSTART{'X-VOBJ-ORIGINAL-TZID': ['Europe/Amsterdam']}
-					# Dus split op } en dan de eerste verwijderen, en het > teken achteraan verwijderen
+					summary = ''.join(summary.split("}")[1:])[:-1]
 					start = parse(''.join(start.split("}")[1:])[:-1])
 
 					# Eerste event in deze agenda? Toon de agenda naam

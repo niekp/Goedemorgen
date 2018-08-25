@@ -43,7 +43,8 @@ class Agenda(_Module):
 			if calendar_name in config["calendars"]:
 				first = True
 
-				results = calendar.date_search(datetime.now() - timedelta(hours=4), datetime.now() + timedelta(days=1))
+				# Evenementen voor vandaag zoeken, met een beetje buffer terug in de tijd.
+				results = calendar.date_search(datetime.now() - timedelta(hours=2), datetime.now() + timedelta(days=1))
 				for vevent in results:
 					event = Event(client=client, url=vevent.url)
 					event.load()

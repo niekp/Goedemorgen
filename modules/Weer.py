@@ -15,6 +15,11 @@ class Weer(_Module):
 		# Een textfile met de API-key. Met name om de key uit git te houden, en niet te hardcoden.
 		apikey = config_full["Runtime"]["secrets"]["darksky_apikey"]
 
+		temperatureKey = "temperature"
+		if 'gevoel' in config:
+			if config["gevoel"]:
+				temperatureKey = "apparentTemperature"
+
 		# Cache de API verzoeken in een map per dag.
 		filename = "{0}/Weer{1}_{2}.json".format(config_full["Runtime"]["datadir"], str(config["lang"]), str(config["long"]))
 
@@ -34,7 +39,7 @@ class Weer(_Module):
 
 		# Weerbericht opbouwen op basis van voorkeurs tijden.
 		if "tijden" in config:
-			text_builder = u"Het is nu {0}°<br/>".format(weather["currently"]["temperature"]);
+			text_builder = u"Het is nu {0}°<br/>".format(weather["currently"][temperatureKey]);
 
 			weekday = datetime.datetime.today().weekday()
 
@@ -51,7 +56,15 @@ class Weer(_Module):
 						# Staat het uur in de gewenste tijden?
 						if hour in config["tijden"][str(weekday)]:
 							# Text opbouwen per tijd.
-							text_builder += "Om {0} uur is het {1}°<br/>".format(hour, data["temperature"])
+							text_builder += "Om {0} uur is het {1}°".format(hour, data[temperatureKey])
+							if (data["precipProbability"] >= 0.1):
+								perciptype = "regen"
+								if data["precipType"] == "snow":
+									perciptype = "sneeuw"
+
+								text_builder += " met {0}% kans op {1}".format(round(data["precipProbability"]*100), perciptype)
+
+							text_builder += "<br/>"
 
 				self.text = text_builder
 
@@ -61,7 +74,7 @@ class Weer(_Module):
 		else:
 			# Standaard tekst
 			self.text = u"Het is nu {0}° en het wordt vandaag tussen de {1}° en {2}°".format(
-				weather["currently"]["temperature"], 
+				weather["currently"][temperatureKey], 
 				weather["daily"]["data"][0]["temperatureLow"], 
 				weather["daily"]["data"][0]["temperatureHigh"])
 

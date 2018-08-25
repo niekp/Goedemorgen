@@ -11,7 +11,7 @@ Een goedemorgen bericht om de dag te starten. De wordt opgebouwd uit een config 
 - Bericht wordt via de mail afgeleverd
 
 ## Todo
-- [ ] Regen bij weerinformatie
+- [x] Regen bij weerinformatie
 - [ ] Praktische info als, jas aan, korte broek aan, met de auto/fiets/brommer
 - [ ] Weer en agenda combineren
 - [ ] Notities / todo file vandaag, algemeen en gemist afgelopen dagen

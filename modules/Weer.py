@@ -34,7 +34,7 @@ class Weer(_Module):
 
 		# Weerbericht opbouwen op basis van voorkeurs tijden.
 		if "tijden" in config:
-			text_builder = u"Het is nu {0}°\n".format(weather["currently"]["temperature"]);
+			text_builder = u"Het is nu {0}°<br/>".format(weather["currently"]["temperature"]);
 
 			weekday = datetime.datetime.today().weekday()
 
@@ -51,7 +51,7 @@ class Weer(_Module):
 						# Staat het uur in de gewenste tijden?
 						if hour in config["tijden"][str(weekday)]:
 							# Text opbouwen per tijd.
-							text_builder += "Om {0} uur is het {1}°\n".format(hour, data["temperature"])
+							text_builder += "Om {0} uur is het {1}°<br/>".format(hour, data["temperature"])
 
 				self.text = text_builder
 

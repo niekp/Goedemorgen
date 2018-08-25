@@ -77,12 +77,17 @@ for user in users:
 			modules.append(LastFmDisconnected(config))
 
 		#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-		text = "# Goedemorgen\n"
+		if tz.localize(datetime.datetime.now()).hour >= 19:
+			text = "<h1>Goedenavond</h1>"
+		elif tz.localize(datetime.datetime.now()).hour >= 12:
+			text = "<h1>Goedemiddag</h1>"
+		else:
+			text = "<h1>Goedemorgen</h1>"
 
 		# Modules uitvoeren
 		for module in modules:
 			if (module.HasText()):
-				text += module.GetText() + "\n\n";
+				text += module.GetText() + "<br/><br/>";
 
 		print(text)
 

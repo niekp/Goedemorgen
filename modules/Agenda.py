@@ -70,14 +70,14 @@ class Agenda(_Module):
 					if first:
 						# Niet de eerste agenda? Extra witregel
 						if not first_all:
-							self.text += "\n"
+							self.text += "<br/>"
 
-						self.text += "_" + calendar_name + "_\n"
+						self.text += "<h3>" + calendar_name + "</h3>"
 						first = False
 						first_all = False
 
 					# Event samenvatting (tijd + omschijving) toevoegen aan de text
-					self.text += "{0} {1}\n".format(start.strftime("%A %H:%M"), summary)
+					self.text += "{0} {1}<br/>".format(start.strftime("%A %H:%M"), summary)
 
 
 		if not first_all:

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import smtplib
+import smtplib, datetime
+import pytz
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -13,6 +14,11 @@ class Email:
 		domain = self.config["Runtime"]["secrets"]["email_domain"]
 		password = self.config["Runtime"]["secrets"]["email_password"]
 
+		if 'TZ' in self.config:
+			tz = pytz.timezone(self.config["TZ"])
+		else:
+			tz = pytz.timezone("Europe/Amsterdam")
+
 		# Verbind met mailserver
 		mailserver = smtplib.SMTP("mail." + domain);
 		mailserver.ehlo();
@@ -23,12 +29,19 @@ class Email:
 		# Mailbericht opbouwen
 		message = MIMEMultipart('alternative')
 
+		if tz.localize(datetime.datetime.now()).hour >= 19:
+			message['Subject'] = "Goedenavond"
+		elif tz.localize(datetime.datetime.now()).hour >= 12:
+			message['Subject'] = "Goedemiddag"
+		else:
+			message['Subject'] = "Goedemorgen"
+
 		message['Subject'] = "Goedemorgen"
 		message['From'] = "Goedemorgen <noreply@" + domain + ">"
 		message['To'] = self.emailadres
 
 		html = text
-		message.attach(MIMEText(html, "plain", "utf-8"));
+		message.attach(MIMEText(html, "html", "utf-8"));
 
 		# E-mail versturen
 		mailserver.sendmail("noreply@" + domain, self.emailadres, message.as_string())

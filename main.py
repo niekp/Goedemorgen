@@ -5,9 +5,9 @@ from os import walk
 import pytz
 
 from Config import Config
-from Email import Email
 
 from modules import *
+from notifiers import *
 from lib import Functions as f
 
 # Cachedir voor vandaag maken indien nodig. Voor het zetten van de locale
@@ -74,21 +74,22 @@ for user in users:
 			modules.append(LastFmDisconnected(config))
 
 		#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-		if f.Now(config).hour >= 19:
-			text = "<h1>Goedenavond</h1>"
-		elif f.Now(config).hour >= 12:
-			text = "<h1>Goedemiddag</h1>"
-		else:
-			text = "<h1>Goedemorgen</h1>"
-
+		text = ""
+		
 		# Modules uitvoeren
 		for module in modules:
 			if (module.HasText()):
 				text += module.GetText() + "<br/><br/>";
 
-		print(f.html2plain(text))
+		# Onnodige enters aan het eind verwijderen
+		text = text.replace("<br />", "<br/>")
+		while text[-5:] == "<br/>":
+			text = text[:-5]
 
 		if "Email" in config:
 			email = Email(config)
-
 			email.Send(text)
+
+		if "Pushbullet" in config:
+			pb = PushBullet(config)
+			pb.Send(text)

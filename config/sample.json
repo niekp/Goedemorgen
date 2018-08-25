@@ -39,5 +39,8 @@
 	"Email": {
 		"emailadres": "email@domain.com"
 	},
+	"Pushbullet": {
+		"apikey": "key"
+	},
 	"Runtime": {}
 }

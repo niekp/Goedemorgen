@@ -8,7 +8,7 @@ Een goedemorgen bericht om de dag te starten. De wordt opgebouwd uit een config 
 - 'Server monitoring' > heeft een server al x uur niks van zich laten weten
 - Waarschuwing bij ontkoppelde last.fm scrobbler
 - Via config file instelbaar
-- Bericht wordt via de mail afgeleverd
+- Bericht wordt via de mail of pushbullet afgeleverd
 
 ## Todo
 - [x] Regen bij weerinformatie
@@ -30,4 +30,5 @@ python3.6
 ```bash
 pip3 install caldav
 pip3 install pytz
+pip3 install pushbullet.py
 ```

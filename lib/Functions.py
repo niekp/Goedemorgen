@@ -23,4 +23,15 @@ class Functions:
 		return tz
 
 	def Now(config):
-		return Functions.GetTZ(config).localize(datetime.datetime.now())
+		return datetime.datetime.now().astimezone(Functions.GetTZ(config))
+
+	def Goede(config):
+		now = Functions.Now(config)
+		goede = ""
+		if now.hour >= 19:
+			return "Goedenavond"
+		elif now.hour >= 12:
+			return "Goedemiddag"
+		else:
+			return "Goedemorgen"
+

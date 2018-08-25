@@ -8,6 +8,7 @@ from Config import Config
 from Email import Email
 
 from modules import *
+from lib import Functions as f
 
 # Cachedir voor vandaag maken indien nodig. Voor het zetten van de locale
 datadir = "data/{0}/".format(datetime.datetime.today().strftime('%Y%m%d'))
@@ -24,6 +25,7 @@ elif socket.gethostname() == "webserver":
 			conf_file = filename.replace(".json", "")
 			if (conf_file != "test" and conf_file != "sample"):
 				users.append(conf_file)
+
 
 for user in users:
 	# Config inlezen
@@ -42,15 +44,10 @@ for user in users:
 		if 'Locale' in config:
 			locale.setlocale(locale.LC_TIME, '{0}.UTF-8'.format(config["Locale"]))
 
-		if 'TZ' in config:
-			tz = pytz.timezone(config["TZ"])
-		else:
-			tz = pytz.timezone("Europe/Amsterdam")
-			
 		# Checken of je de notificatie dit uur wilt ontvangen? 
 		run = False
 		if 'Tijd' in config:
-			if tz.localize(datetime.datetime.now()).hour in config["Tijd"]:
+			if f.Now(config).hour in config["Tijd"]:
 				run = True
 
 	if run:
@@ -77,9 +74,9 @@ for user in users:
 			modules.append(LastFmDisconnected(config))
 
 		#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-		if tz.localize(datetime.datetime.now()).hour >= 19:
+		if f.Now(config).hour >= 19:
 			text = "<h1>Goedenavond</h1>"
-		elif tz.localize(datetime.datetime.now()).hour >= 12:
+		elif f.Now(config).hour >= 12:
 			text = "<h1>Goedemiddag</h1>"
 		else:
 			text = "<h1>Goedemorgen</h1>"
@@ -89,7 +86,7 @@ for user in users:
 			if (module.HasText()):
 				text += module.GetText() + "<br/><br/>";
 
-		print(text)
+		print(f.html2plain(text))
 
 		if "Email" in config:
 			email = Email(config)

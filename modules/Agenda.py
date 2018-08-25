@@ -4,6 +4,7 @@ import pytz
 from datetime import datetime
 from datetime import timedelta
 from dateutil.parser import parse
+from lib import Functions as f
 
 # Caldav includes
 from caldav.davclient import DAVClient
@@ -28,10 +29,7 @@ class Agenda(_Module):
 		self.text = "";
 		
 		config = config_full["Agenda"]
-		if 'TZ' in config:
-			tz = pytz.timezone(config_full["TZ"])
-		else:
-			tz = pytz.timezone("Europe/Amsterdam")
+		
 
 		# Verbinding maken met CalDav agenda
 		client = caldav.DAVClient(config["url"])
@@ -48,7 +46,7 @@ class Agenda(_Module):
 			if calendar_name in config["calendars"]:
 				first = True
 
-				now = tz.localize(datetime.now())
+				now = f.Now(config_full)
 
 				# Evenementen voor vandaag zoeken, met een beetje buffer terug in de tijd.
 				results = calendar.date_search(now - timedelta(hours=2), now + timedelta(days=1))

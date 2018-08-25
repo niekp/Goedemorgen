@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import smtplib, datetime
-import pytz
+from lib import Functions as f
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -14,10 +14,7 @@ class Email:
 		domain = self.config["Runtime"]["secrets"]["email_domain"]
 		password = self.config["Runtime"]["secrets"]["email_password"]
 
-		if 'TZ' in self.config:
-			tz = pytz.timezone(self.config["TZ"])
-		else:
-			tz = pytz.timezone("Europe/Amsterdam")
+		now = f.Now(self.config)
 
 		# Verbind met mailserver
 		mailserver = smtplib.SMTP("mail." + domain);
@@ -29,9 +26,9 @@ class Email:
 		# Mailbericht opbouwen
 		message = MIMEMultipart('alternative')
 
-		if tz.localize(datetime.datetime.now()).hour >= 19:
+		if now.hour >= 19:
 			message['Subject'] = "Goedenavond"
-		elif tz.localize(datetime.datetime.now()).hour >= 12:
+		elif now.hour >= 12:
 			message['Subject'] = "Goedemiddag"
 		else:
 			message['Subject'] = "Goedemorgen"

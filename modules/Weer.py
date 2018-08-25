@@ -2,6 +2,7 @@
 import datetime, json
 import urllib.request
 import os.path
+from lib import Functions as f
 
 from modules import _Module
 
@@ -23,6 +24,8 @@ class Weer(_Module):
 		# Cache de API verzoeken in een map per dag.
 		filename = "{0}/Weer{1}_{2}.json".format(config_full["Runtime"]["datadir"], str(config["lang"]), str(config["long"]))
 
+		now = f.Now(config_full)
+
 		if os.path.exists(filename):
 			data = open(filename).read()
 
@@ -41,7 +44,7 @@ class Weer(_Module):
 		if "tijden" in config:
 			text_builder = u"Het is nu {0}°<br/>".format(weather["currently"][temperatureKey]);
 
-			weekday = datetime.datetime.today().weekday()
+			weekday = now.weekday()
 
 			# Wil je vandaag een voorspelling?
 			if str(weekday) in config["tijden"]:
@@ -51,10 +54,10 @@ class Weer(_Module):
 					day = datetime.datetime.utcfromtimestamp(data["time"]).day
 
 					# Alleen de voorspelling van vandaag gebruiken
-					if day == datetime.datetime.today().day:
+					if day == now.day:
 
-						# Staat het uur in de gewenste tijden?
-						if hour in config["tijden"][str(weekday)]:
+						# Staat het uur in de gewenste tijden, en na het huidige uur?
+						if hour in config["tijden"][str(weekday)] and hour >= now.hour:
 							# Text opbouwen per tijd.
 							text_builder += "Om {0} uur is het {1}°".format(hour, data[temperatureKey])
 							if (data["precipProbability"] >= 0.1):

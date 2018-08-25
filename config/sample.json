@@ -1,5 +1,6 @@
 {
 	"Locale": "nl_NL",
+	"TZ": "Europe/Amsterdam",
 	"Tijd": [ 8, 17 ],
 	"Afval": {
 		"0": "plastic",
@@ -30,6 +31,10 @@
 			"Personal", "Sport", "Birthdays"
 		]
 	},
+	"LastFmDisconnected": {
+		"username": "user",
+        "hours": 20
+    },
 	"Email": {
 		"emailadres": "email@domain.com"
 	},

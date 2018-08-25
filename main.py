@@ -2,6 +2,7 @@
 import os, datetime, json, locale
 import sys, socket
 from os import walk
+import pytz
 
 from Config import Config
 from Email import Email
@@ -26,17 +27,31 @@ elif socket.gethostname() == "webserver":
 
 for user in users:
 	# Config inlezen
-	config = Config(user).GetConfig()
+	run = True
 
-	# Set de locale, voor de tijd functies (agenda) en de tijd van de cron
-	if 'Locale' in config:
-		locale.setlocale(locale.LC_TIME, '{0}.UTF-8'.format(config["Locale"]))
+	try:
+		config = Config(user).GetConfig()
+	except Exception as e:
+		print("Error: de config van {0} is niet correct.".format(user))
+		run = False
+		pass
 
-	# Checken of je de notificatie dit uur wilt ontvangen? 
-	run = False
-	if 'Tijd' in config:
-		if datetime.datetime.now().hour in config["Tijd"]:
-			run = True
+
+	if run:
+		# Set de locale, voor de tijd functies (agenda) en de tijd van de cron
+		if 'Locale' in config:
+			locale.setlocale(locale.LC_TIME, '{0}.UTF-8'.format(config["Locale"]))
+
+		if 'TZ' in config:
+			tz = pytz.timezone(config["TZ"])
+		else:
+			tz = pytz.timezone("Europe/Amsterdam")
+			
+		# Checken of je de notificatie dit uur wilt ontvangen? 
+		run = False
+		if 'Tijd' in config:
+			if tz.localize(datetime.datetime.now()).hour in config["Tijd"]:
+				run = True
 
 	if run:
 		# Config extenden met runtime variabelen
@@ -49,15 +64,17 @@ for user in users:
 		if "Afval" in config:
 			modules.append(Afval(config))
 
-		if "Downtime" in config:
-			modules.append(Downtime(config))
-
 		if "Weer" in config:
 			modules.append(Weer(config))
 
 		if "Agenda" in config:
 			modules.append(Agenda(config))
 
+		if "Downtime" in config:
+			modules.append(Downtime(config))
+
+		if "LastFmDisconnected" in config:
+			modules.append(LastFmDisconnected(config))
 
 		#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 		text = "# Goedemorgen\n"

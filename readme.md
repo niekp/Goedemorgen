@@ -20,8 +20,9 @@ Een probeersel om een 'goedemorgen' bericht te genereren aan de hand van een aan
 - [ ] ANWB API, file informatie
 
 ## Dependencies
-python3.6.5
+python3.6
 
 ```bash
 pip3 install caldav
+pip3 install pytz
 ```

@@ -4,3 +4,4 @@ from modules.Afval import Afval
 from modules.Downtime import Downtime
 from modules.Weer import Weer
 from modules.Agenda import Agenda
+from modules.LastFmDisconnected import LastFmDisconnected

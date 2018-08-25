@@ -1,5 +1,6 @@
 import json
 import caldav
+import pytz
 from datetime import datetime
 from datetime import timedelta
 from dateutil.parser import parse
@@ -27,6 +28,10 @@ class Agenda(_Module):
 		self.text = "";
 		
 		config = config_full["Agenda"]
+		if 'TZ' in config:
+			tz = pytz.timezone(config_full["TZ"])
+		else:
+			tz = pytz.timezone("Europe/Amsterdam")
 
 		# Verbinding maken met CalDav agenda
 		client = caldav.DAVClient(config["url"])
@@ -43,8 +48,10 @@ class Agenda(_Module):
 			if calendar_name in config["calendars"]:
 				first = True
 
+				now = tz.localize(datetime.now())
+
 				# Evenementen voor vandaag zoeken, met een beetje buffer terug in de tijd.
-				results = calendar.date_search(datetime.now() - timedelta(hours=2), datetime.now() + timedelta(days=1))
+				results = calendar.date_search(now - timedelta(hours=2), now + timedelta(days=1))
 				for vevent in results:
 					event = Event(client=client, url=vevent.url)
 					event.load()
@@ -54,7 +61,9 @@ class Agenda(_Module):
 					start = event.instance.vevent.dtstart.__str__()
 					summary = event.instance.vevent.summary.__str__()
 					# Zo kan het ook.
-					summary = ''.join(summary.split("}")[1:])[:-1]
+					summary = summary.replace("<SUMMARY{}", "")[:-1]
+					# Dit komt binnen: <DTSTART{'X-VOBJ-ORIGINAL-TZID': ['Europe/Amsterdam']}
+					# Dus split op } en dan de eerste verwijderen, en het > teken achteraan verwijderen
 					start = parse(''.join(start.split("}")[1:])[:-1])
 
 					# Eerste event in deze agenda? Toon de agenda naam

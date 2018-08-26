@@ -17,8 +17,10 @@ if not os.path.isdir(datadir):
 
 # Elke user heeft een config file. Op mijn PC alleen test draaien, op de webserver iedereen (behalve sample en test)
 users = []
+prod = True
 if socket.gethostname() == "Swifty":
 	users.append("test")
+	prod = False
 elif socket.gethostname() == "webserver":
 	for (dirpath, dirnames, filenames) in walk("config"):
 		for filename in filenames:
@@ -53,7 +55,7 @@ for user in users:
 	if run:
 		# Config extenden met runtime variabelen
 		with open('secrets/secrets.json') as secrets:    
-			config['Runtime'] = { "datadir": datadir, "secrets": json.load(secrets) }
+			config['Runtime'] = { "datadir": datadir, "secrets": json.load(secrets), "production": prod }
 
 		# Modules toevoegen
 		modules = []
@@ -67,12 +69,16 @@ for user in users:
 		if "Agenda" in config:
 			modules.append(Agenda(config))
 
+		if "MarkdownTodo" in config:
+			modules.append(MarkdownTodo(config))
+
 		if "Downtime" in config:
 			modules.append(Downtime(config))
 
 		if "LastFmDisconnected" in config:
 			modules.append(LastFmDisconnected(config))
 
+		
 		#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 		text = ""
 		
@@ -85,6 +91,8 @@ for user in users:
 		text = text.replace("<br />", "<br/>")
 		while text[-5:] == "<br/>":
 			text = text[:-5]
+
+		print(f.html2plain(text))
 
 		if "Email" in config:
 			email = Email(config)

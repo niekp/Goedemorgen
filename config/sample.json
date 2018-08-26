@@ -32,6 +32,11 @@
 			"Personal", "Sport", "Birthdays"
 		]
 	},
+	"MarkdownTodo": {
+		"folder": "https://user:pass@domain.com/remote.php/dav/files/user/Notes/",
+		"inbox": "QuickNote.md",
+		"weekly": "%40weekly/Week%20[week]%20-%20[jaar].md"
+	},
 	"LastFmDisconnected": {
 		"username": "user",
         "hours": 20

@@ -11,6 +11,14 @@ class Functions:
 		text = text.replace("</h2>", "_\n")
 		text = text.replace("<h3>", "_")
 		text = text.replace("</h3>", "_\n")
+		text = text.replace("<input type='checkbox' />", "[ ]")
+		text = text.replace("<input type='checkbox' checked='checked' />", "[x]")
+		return text
+
+	def plain2hml(text):
+		text = text.replace("\n", "<br/>")
+		text = text.replace("- [ ]", "<input type='checkbox' />")
+		text = text.replace("- [x]", "<input type='checkbox' checked='checked' />")
 		return text
 
 

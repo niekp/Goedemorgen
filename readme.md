@@ -4,6 +4,7 @@ Een goedemorgen bericht om de dag te starten. De wordt opgebouwd uit een config 
 ## Features
 - Agenda evenementen van vandaag via CalDav
 - Weer voorspelling van gewenste tijdstippen (bijv. huis > werk)
+- Markdown todo/weekplanning. [Uitleg staat onder de code](modules/MarkdownTodo.py)
 - Plastic/papier/.. afval bij de weg
 - 'Server monitoring' > heeft een server al x uur niks van zich laten weten
 - Waarschuwing bij ontkoppelde last.fm scrobbler
@@ -14,7 +15,7 @@ Een goedemorgen bericht om de dag te starten. De wordt opgebouwd uit een config 
 - [x] Regen bij weerinformatie
 - [ ] Praktische info als, jas aan, korte broek aan, met de auto/fiets/brommer
 - [ ] Weer en agenda combineren
-- [ ] Notities / todo file vandaag, algemeen en gemist afgelopen dagen
+- [x] Notities / todo file vandaag, algemeen en gemist afgelopen dagen
 - [ ] Downtime uitbereiden met meerdere servers (laatste succesvolle backup ping ipv de uptime) 
 
 ## Ideeen

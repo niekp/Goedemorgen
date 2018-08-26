@@ -7,7 +7,7 @@ class Afval(_Module):
 		self.hasText = False
 		self.text = "";
 
-		config = config_full["Downtime"]
+		config = config_full["Afval"]
 
 		# Dag van vandaag
 		weekday = datetime.datetime.today().weekday()

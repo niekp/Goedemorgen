@@ -26,7 +26,7 @@ class Weer(_Module):
 
 		now = f.Now(config_full)
 
-		if os.path.exists(filename):
+		if os.path.exists(filename) and not config_full["Runtime"]["production"]: # Alleen cachen op test verzoeken, ik blijf toch wel onder de max api calls
 			data = open(filename).read()
 
 		else:

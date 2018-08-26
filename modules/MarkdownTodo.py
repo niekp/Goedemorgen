@@ -32,29 +32,20 @@ class MarkdownTodo(_Module):
 			if response.status_code == 200:
 				weekly = response.text
 
-				# Zoek op ## Dag, en dan alles daarvoor negeren
+				# Zoek op ## Dag
 				weeklyDagIndex = weekly.lower().find("## " + dag)
-				weeklyHist = weekly[:weeklyDagIndex]
-				weeklyDag = weekly[weeklyDagIndex:]
+				# index = start van ## Dag t/m eof, GetBlock kapt hem op de volgende ## af
+				weeklyDag = self.GetBlock(weekly[weeklyDagIndex:])
 
-				# Zoek op de ## of --- als eindtag, negeer de eerste 2 karakters, die zijn namelijk ##
-				weeklyDagIndex = weeklyDag[2:].lower().find("##")
-				weeklyDagIndexTmp = weeklyDag.lower().find("--")
-
-				if weeklyDagIndexTmp < weeklyDagIndex and weeklyDagIndexTmp > 0:
-					weeklyDagIndex = weeklyDagIndexTmp
-
-				if weeklyDagIndex >= 0:
-					weeklyDag = weeklyDag[:weeklyDagIndex]
-
-				# Newlines van het einde verwijderen
-				weeklyDag = weeklyDag.rstrip()
+				# Filter alle uitgevoerde taken
+				weeklyDag = self.FilterDone(weeklyDag)
 
 				# Openstaande punten uit vorige dagen
 				laatsteDag = ""
 				firstDag = True
 				histText = ""
-				for regel in weeklyHist.split("\n"):
+				# DagIndex = index van vandaag, alles daarvoor is al geweest, dus scannen op gemist.
+				for regel in weekly[:weeklyDagIndex].split("\n"):
 					if regel.find("## ") >= 0: # Dag onthouden om in het bericht te zetten
 						laatsteDag = regel
 						firstDag = True
@@ -68,24 +59,11 @@ class MarkdownTodo(_Module):
 				histText = histText.rstrip()
 
 				# Openstaande punten in de algemene ## TODO
-				weeklyTodoIndex = weekly.lower().find("## todo")
-				weeklyTodo = weekly[weeklyTodoIndex:]
-
-				# Zoeken op een break, soms heb ik nog ## Notes onder ## TODO staan
-				weeklyTodoIndex = weeklyTodo[2:].lower().find("##")
-				weeklyTodoIndexTmp = weeklyTodo.lower().find("--")
-
-				if weeklyTodoIndexTmp < weeklyTodoIndex and weeklyTodoIndexTmp > 0:
-					weeklyTodoIndex = weeklyTodoIndexTmp
-
-				if weeklyTodoIndex >= 0:
-					weeklyTodo = weeklyTodo[:weeklyTodoIndex]
+				# .find = start van ## todo t/m eof, GetBlock kapt hem op de volgende ## af
+				weeklyTodo = self.GetBlock(weekly[weekly.lower().find("## todo"):])
 
 				# Todo tekst opbouwen, alleen openstaande vinkjes
-				todoText = ""
-				for regel in weeklyTodo.split("\n"):
-					if regel.find("[ ]") >= 0:
-						todoText += regel + "\n"
+				todoText = self.FilterDone(weeklyTodo)
 
 
 				#*# Tekst opbouwen
@@ -103,7 +81,7 @@ class MarkdownTodo(_Module):
 				# Open algemene TODO toevoegen
 				if todoText != "":
 					self.hasText = True
-					self.text += "## TODO\n" + todoText + "\n\n"
+					self.text += todoText + "\n\n"
 
 			# Omzetten naar HTML gezien main dat verwacht.
 			self.text = f.plain2hml(self.text).rstrip()
@@ -114,6 +92,33 @@ class MarkdownTodo(_Module):
 	def GetText(self):
 		return super(MarkdownTodo, self).GetText()
 
+	def FilterDone(self, text):
+		textOut = ""
+		titleFound = False
+		# Elke regel checken op een open taak, zo ja toevoegen
+		for regel in text.split("\n"):
+			if regel.find("[ ]") >= 0:
+				textOut += regel + "\n"
+			elif regel.find("-") < 0 and not titleFound:
+				# De eerste regel zonder - is de titel
+				textOut = regel + "\n" + textOut
+				titleFound = True
+
+		textOut = textOut.rstrip()
+		return textOut
+
+	def GetBlock(self, text):
+		# Zoek op de ## of --- als eindtag, negeer de eerste 2 karakters, die zijn namelijk ##
+		textIndex = text[2:].lower().find("##")
+		textIndexTmp = text.lower().find("---")
+
+		if textIndexTmp < textIndex and textIndexTmp > 0:
+			textIndex = textIndexTmp
+
+		if textIndex >= 0:
+			text = text[:textIndex]
+
+		return text
 
 """
 Uitleg: Elke week maak ik een .md bestand als agenda/todo. Deze ziet er zo uit:

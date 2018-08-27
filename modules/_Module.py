@@ -14,4 +14,4 @@ class _Module(object):
 
 	@abstractmethod
 	def GetText(self):
-		return self.text
+		return self.text.rstrip()

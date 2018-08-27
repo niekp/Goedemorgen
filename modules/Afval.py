@@ -1,4 +1,5 @@
 import datetime, json
+from lib import Functions as f
 from modules import _Module
 
 class Afval(_Module):
@@ -9,13 +10,17 @@ class Afval(_Module):
 
 		config = config_full["Afval"]
 
-		# Dag van vandaag
-		weekday = datetime.datetime.today().weekday()
+		now = f.Now(config_full)
 
-		# Staat vandaag in de config file?
-		if str(weekday) in config:
-			self.hasText = True
-			self.text = "Vandaag moet het " + config[str(weekday)] + " bij de weg"
+		# Na 11u is het toch al te laat
+		if now.hour < 11:
+			# Dag van vandaag
+			weekday = now.weekday()
+
+			# Staat vandaag in de config file?
+			if str(weekday) in config:
+				self.hasText = True
+				self.text = "Vandaag moet het " + config[str(weekday)] + " bij de weg"
 
 	def HasText(self):
 		return super(Afval, self).HasText()

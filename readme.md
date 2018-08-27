@@ -5,6 +5,7 @@ Een goedemorgen bericht om de dag te starten. De wordt opgebouwd uit een config 
 - Agenda evenementen van vandaag via CalDav
 - Weer voorspelling van gewenste tijdstippen (bijv. huis > werk)
 - Markdown todo/weekplanning. [Uitleg staat onder de code](modules/MarkdownTodo.py)
+- Nieuwe album releases via [muspy](https://muspy.com/)
 - Plastic/papier/.. afval bij de weg
 - 'Server monitoring' > heeft een server al x uur niks van zich laten weten
 - Waarschuwing bij ontkoppelde last.fm scrobbler
@@ -21,7 +22,7 @@ Een goedemorgen bericht om de dag te starten. De wordt opgebouwd uit een config 
 ## Ideeen
 - [ ] Top artiest last.fm gisteren
 - [ ] Nieuwe TV afleveringen vandaag / trakt of sonarr
-- [ ] Nieuwe muziek releases op basis van spotify API of [muspy](https://muspy.com/) feed.
+- [x] Nieuwe muziek releases op basis van spotify API of [muspy](https://muspy.com/) feed.
 - [ ] Nieuwe afleveringen van podcast, of elke RSS-feed is dan mogelijk
 - [ ] ANWB API, file informatie
 
@@ -32,4 +33,5 @@ python3.6
 pip3 install caldav
 pip3 install pytz
 pip3 install pushbullet.py
+pip3 install feedparser
 ```

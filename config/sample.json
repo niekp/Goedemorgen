@@ -39,8 +39,11 @@
 	},
 	"LastFmDisconnected": {
 		"username": "user",
-        "hours": 20
-    },
+		"hours": 20
+	},
+	"Muspy": {
+		"feed": "https://muspy.com/feed?id=XXXX"
+	},
 	"Email": {
 		"emailadres": "email@domain.com"
 	},

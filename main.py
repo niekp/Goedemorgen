@@ -15,6 +15,7 @@ datadir = "data/{0}/".format(datetime.datetime.today().strftime('%Y%m%d'))
 if not os.path.isdir(datadir):
 	os.makedirs(datadir)
 
+
 # Elke user heeft een config file. Op mijn PC alleen test draaien, op de webserver iedereen (behalve sample en test)
 users = []
 prod = True
@@ -53,9 +54,14 @@ for user in users:
 				run = True
 
 	if run:
+
+		userdir = "data/{0}/".format(user)
+		if not os.path.isdir(userdir):
+			os.makedirs(userdir)
+			
 		# Config extenden met runtime variabelen
 		with open('secrets/secrets.json') as secrets:    
-			config['Runtime'] = { "datadir": datadir, "secrets": json.load(secrets), "production": prod }
+			config['Runtime'] = { "datadir": datadir, "userdir": userdir, "secrets": json.load(secrets), "production": prod, "user": user }
 
 		# Modules toevoegen
 		modules = []
@@ -71,6 +77,9 @@ for user in users:
 
 		if "MarkdownTodo" in config:
 			modules.append(MarkdownTodo(config))
+
+		if "Muspy" in config:
+			modules.append(Muspy(config))
 
 		if "Downtime" in config:
 			modules.append(Downtime(config))

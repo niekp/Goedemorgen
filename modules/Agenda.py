@@ -75,7 +75,11 @@ class Agenda(_Module):
 						first_all = False
 
 					# Event samenvatting (tijd + omschijving) toevoegen aan de text
-					self.text += "{0} {1}<br/>".format(start.strftime("%A %H:%M"), summary)
+					dt = "%A %H:%M"
+					if (calendar_name.lower().find("birthday") >= 0 or calendar_name.lower().find("verjaardag") >= 0):
+						dt = "%A"
+					
+					self.text += "{0} {1}<br/>".format(start.strftime(dt), summary)
 
 
 		if not first_all:

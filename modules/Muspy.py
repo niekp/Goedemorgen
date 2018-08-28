@@ -58,7 +58,8 @@ class Muspy(_Module):
 
 	def UpdateDB(self, id, title, updated):
 		cursor = self.conn.cursor()
-
+		
+		# Die feed spoort niet helemaal, als hij vervelend blijft doen op title matchen en hopen dat dat beter gaat.
 		cursor.execute("SELECT title, updated, notified FROM Muspy WHERE id = ?", (id,))
 		result = cursor.fetchone()
 

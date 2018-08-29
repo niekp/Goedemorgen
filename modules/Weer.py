@@ -42,12 +42,18 @@ class Weer(_Module):
 
 		# Weerbericht opbouwen op basis van voorkeurs tijden.
 		if "tijden" in config:
-			text_builder = u"Het is nu {0}°<br/>".format(weather["currently"][temperatureKey]);
+			text_builder = ""
 
 			weekday = now.weekday()
 
 			# Wil je vandaag een voorspelling?
 			if str(weekday) in config["tijden"]:
+
+				# Stats voor het advies
+				minTemp = 99
+				maxTemp = -99
+				maxRegen = 0
+
 				# Voor elk uur de voorspelling opzoeken
 				for data in weather["hourly"]["data"]:
 					hour = datetime.datetime.utcfromtimestamp(data["time"]).hour
@@ -55,7 +61,6 @@ class Weer(_Module):
 
 					# Alleen de voorspelling van vandaag gebruiken
 					if day == now.day:
-
 						# Staat het uur in de gewenste tijden, en na het huidige uur?
 						if hour in config["tijden"][str(weekday)] and hour >= now.hour:
 							# Text opbouwen per tijd.
@@ -67,9 +72,36 @@ class Weer(_Module):
 
 								text_builder += " met {0}% kans op {1}".format(round(data["precipProbability"]*100), perciptype)
 
+							if data[temperatureKey] < minTemp:
+								minTemp = data[temperatureKey]
+							if data[temperatureKey] > maxTemp:
+								maxTemp = data[temperatureKey]
+
+							if (data["precipProbability"] * 100) > maxRegen:
+								maxRegen = (data["precipProbability"] * 100)
+
 							text_builder += "<br/>"
 
-				self.text = text_builder
+				if text_builder != "":
+					# Advies opbouwen
+					advies = ""
+					if "advies" in config:
+						for key in config["advies"]:
+							if minTemp >= config["advies"][key]["min"] and maxTemp <= config["advies"][key]["max"] and maxRegen <= config["advies"][key]["regen"]:
+								advies = config["advies"][key]["advies"]
+								break
+
+
+					# Het instellen van advies op basis van parameters is een onmogelijke taak.
+					# Dus of heel veel in de config tweaken en super kleine advies sets maken, of nog iets in code verzinnen.
+					# We gaan het meemaken.. ok doei.
+					if advies != "":
+						text_builder += "Advies: " + advies
+				
+					self.text = text_builder
+
+				else:
+					self.hasText = False
 
 			else:
 				self.hasText = False

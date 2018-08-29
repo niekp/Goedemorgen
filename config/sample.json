@@ -23,6 +23,33 @@
 			"4": [8, 17, 21],
 			"5": [10, 14, 22],
 			"6": [10, 14, 22]
+		},
+		"advies": {	
+			"super_weer": {
+				"min": 20,
+				"max": 99,
+				"regen": 0,
+				"advies": "Kortebroek!"
+			},
+			"lekker_langebroek": {
+				"min": 14,
+				"max": 20,
+				"regen": 100,
+				"advies": "T-shirt, lange broek"
+			},
+			"beetje_koud_droog-ish": {
+				"min": 8,
+				"max": 13,
+				"regen": 30,
+				"advies": "Trui, lange broek"
+			},
+			"koud_of_regen": {
+				"min": -99,
+				"max": 13,
+				"regen": 100,
+				"advies": "Trui, jas, lange broek"
+			}
+			
 		}
 
 	},

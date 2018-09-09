@@ -71,6 +71,13 @@
 	"Muspy": {
 		"feed": "https://muspy.com/feed?id=XXXX"
 	},
+	"SociaalWerker": {
+		"notificationsURL": "https://domein.com/notifications/get/key",
+		"personen": {
+			"Homie": "10h",
+			"Broeder": "2d",
+		}
+	},
 	"Email": {
 		"emailadres": "email@domain.com"
 	},

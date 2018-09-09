@@ -87,6 +87,9 @@ for user in users:
 		if "LastFmDisconnected" in config:
 			modules.append(LastFmDisconnected(config))
 
+		if "SociaalWerker" in config:
+			modules.append(SociaalWerker(config))
+
 		
 		#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 		text = ""

@@ -60,7 +60,9 @@ class Muspy(_Module):
 		cursor = self.conn.cursor()
 		
 		# Die feed spoort niet helemaal, als hij vervelend blijft doen op title matchen en hopen dat dat beter gaat.
-		cursor.execute("SELECT title, updated, notified FROM Muspy WHERE id = ?", (id,))
+		# Oke met titel is niet veel beter, de DB heeft vast tijd nodig om op te bouwen. Met titel scheelt in elk geval dubbele records met een andere id.
+		#cursor.execute("SELECT title, updated, notified FROM Muspy WHERE id = ?", (id,))
+		cursor.execute("SELECT title, updated, notified FROM Muspy WHERE id = ? or title = ?", (id, title,))
 		result = cursor.fetchone()
 
 		# Is de release al bekend?
@@ -71,7 +73,7 @@ class Muspy(_Module):
 			if updated != result[1] or title != result[0]:
 				# Ligt de datum nog in de toekomst, of in het verleden maar is dit nog nooit gemeld?
 				if parse(updated).date() >= datetime.date.today() or result[2] == 0:
-					cursor.execute("update Muspy SET updated = ?, title = ?, notified = ? where id = ?", (updated, title, 0, id))
+					cursor.execute("update Muspy SET updated = ?, title = ?, notified = ? where id = ? or title = ?", (updated, title, 0, id, title))
 
 		cursor.close()
 

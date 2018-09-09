@@ -79,7 +79,7 @@ class MarkdownTodo(_Module):
 					self.text += weeklyDag + "\n\n"
 
 				# Open algemene TODO toevoegen
-				if todoText != "":
+				if todoText.find("[ ]") > 0:
 					self.hasText = True
 					self.text += todoText + "\n\n"
 

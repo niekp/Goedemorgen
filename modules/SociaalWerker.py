@@ -44,6 +44,12 @@ class SociaalWerker(_Module):
 				self.hasText = True
 				self.text += "Al {0} dagen geen contact gehad met {1}\n".format(round(last_message_diff / 60 / 60 / 24, 2), persoon)
 
+		# In productie, verwijder de rauwe notificatie gegevens.
+		if config_full["Runtime"]["production"]:
+			if "clearURL" in self.config:
+				with urllib.request.urlopen(self.config["clearURL"]) as url:
+					data = url.read()
+
 
 		
 	def Update(self):

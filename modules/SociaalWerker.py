@@ -78,11 +78,9 @@ class SociaalWerker(_Module):
 					if int(notification) > int(feitjes[notifications[notification]["NotificationTitle"]]):
 						# Bijwerken
 						feitjes[notifications[notification]["NotificationTitle"]] = notification
-						print("Tijd van " + notifications[notification]["NotificationTitle"] + " geupdate")
 				else:
 					# Notificatie van een onbekende direct toevoegen
 					feitjes[notifications[notification]["NotificationTitle"]] = notification
-					print("Tijd van " + notifications[notification]["NotificationTitle"] + " toegevoegd")
 
 		# Schrijf de datafile weg
 		with open(self.datafile, 'w') as outfile:  

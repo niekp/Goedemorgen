@@ -70,7 +70,7 @@ class SociaalWerker(_Module):
 
 		for notification in notifications:
 			# Parse alleen whatsapp notificaties
-			if notifications[notification]["AppName"] == "WhatsApp" || notifications[notification]["AppName"] == "Signal":
+			if notifications[notification]["AppName"] == "WhatsApp" or notifications[notification]["AppName"] == "Signal":
 
 				# Staat de persoon al in de data?
 				if notifications[notification]["NotificationTitle"] in feitjes:

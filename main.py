@@ -93,11 +93,13 @@ for user in users:
 		
 		#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 		text = ""
-		
+		has_text = False
+
 		# Modules uitvoeren
 		for module in modules:
 			if (module.HasText()):
 				text += module.GetText() + "<br/><br/>";
+				has_text = True
 
 		# Onnodige enters aan het eind verwijderen
 		text = text.replace("<br />", "<br/>")
@@ -106,10 +108,10 @@ for user in users:
 
 		print(f.html2plain(text))
 
-		if "Email" in config:
+		if "Email" in config and has_text:
 			email = Email(config)
 			email.Send(text)
 
-		if "Pushbullet" in config:
+		if "Pushbullet" in config and has_text:
 			pb = PushBullet(config)
 			pb.Send(text)

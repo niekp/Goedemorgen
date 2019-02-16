@@ -53,13 +53,15 @@
 		}
 
 	},
-	"Agenda": { // CalDav
+	"Agenda": {
+		"_coment": "CalDav zoals nextcloud.",
 		"url": "https://user:pass@domain.com/remote.php/dav/",
 		"calendars": [
 			"Personal", "Sport", "Birthdays"
 		]
 	},
-	"Agenda": { // Google - plak de inhoud van credentials.json hier. Te downloaden van: https://developers.google.com/calendar/quickstart/python
+	"Agenda": { 
+		"_comment": "Google calendar - plak de inhoud van credentials.json in de onderstaande key. Te downloaden van: https://developers.google.com/calendar/quickstart/python",
 		"credentials.json": {"installed":{"client_id":"","project_id":"","auth_uri":"","token_uri":"","auth_provider_x509_cert_url":"","client_secret":"","redirect_uris":[]}}
 	},
 	"MarkdownTodo": {

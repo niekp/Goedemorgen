@@ -61,8 +61,9 @@ class Muspy(_Module):
 		
 		# Die feed spoort niet helemaal, als hij vervelend blijft doen op title matchen en hopen dat dat beter gaat.
 		# Oke met titel is niet veel beter, de DB heeft vast tijd nodig om op te bouwen. Met titel scheelt in elk geval dubbele records met een andere id.
-		#cursor.execute("SELECT title, updated, notified FROM Muspy WHERE id = ?", (id,))
-		cursor.execute("SELECT title, updated, notified FROM Muspy WHERE id = ? or title = ?", (id, title,))
+		# 20190216: Leuke edgecase, Er staan 2 albums 'Weezer - Weezer' in de feed (teal and black) dus op titel switcht hij ze en notified hij elke dag. Toch maar weer op ID dus.
+		cursor.execute("SELECT title, updated, notified FROM Muspy WHERE id = ?", (id,))
+		#cursor.execute("SELECT title, updated, notified FROM Muspy WHERE id = ? or title = ?", (id, title,))
 		result = cursor.fetchone()
 
 		# Is de release al bekend?

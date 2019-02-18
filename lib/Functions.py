@@ -33,6 +33,9 @@ class Functions:
 	def Now(config):
 		return datetime.datetime.now().astimezone(Functions.GetTZ(config))
 
+	def GetDateTimeWithTZ(config, dt):
+		return dt.astimezone(Functions.GetTZ(config))
+
 	def Goede(config):
 		now = Functions.Now(config)
 		goede = ""

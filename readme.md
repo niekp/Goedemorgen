@@ -15,7 +15,6 @@ Een goedemorgen bericht om de dag te starten. De wordt opgebouwd uit een config 
 
 ## Todo
 - [ ] Weer en agenda combineren
-- [ ] Downtime uitbereiden met meerdere servers (laatste succesvolle backup ping ipv de uptime) 
 
 ## Ideeen
 - [ ] Top artiest last.fm gisteren

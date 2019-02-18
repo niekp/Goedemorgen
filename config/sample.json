@@ -7,9 +7,13 @@
 		"3": "papier"
 	},
 	"Downtime": {
-		"url": "https://domain.com/pingserver/ping.json",
-		"uur": "3",
-		"server": "backup_server"
+		"_comment": "Zie /php_helpers/pingserver/ voor de 'server' opzet.",
+		"_comment": "Link het json bestand hier en geef per server op hoeveel uur deze stil mag zijn.",
+		"url": "https://example.com/ping.json",
+		"servers": {
+			"backup": 50,
+			"apache": 2
+		}
 	},
 	"Weer": {
 		"lang": 00.000000,

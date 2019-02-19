@@ -8,3 +8,4 @@ from modules.LastFmDisconnected import LastFmDisconnected
 from modules.MarkdownTodo import MarkdownTodo
 from modules.Muspy import Muspy
 from modules.SociaalWerker import SociaalWerker
+from modules.LastFmRecommendation import LastFmRecommendation

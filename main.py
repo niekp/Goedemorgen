@@ -90,6 +90,9 @@ for user in users:
 		if "SociaalWerker" in config:
 			modules.append(SociaalWerker(config))
 
+		if "LastFmRecommendation" in config:
+			modules.append(LastFmRecommendation(config))
+
 		
 		#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 		text = ""

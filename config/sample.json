@@ -77,6 +77,11 @@
 		"username": "user",
 		"hours": 20
 	},
+	"LastFmRecommendation": {
+		"username": "user",
+		"period": "overall",
+		"top": 1000
+    },
 	"Muspy": {
 		"feed": "https://muspy.com/feed?id=XXXX"
 	},

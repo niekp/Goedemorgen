@@ -9,3 +9,4 @@ from modules.MarkdownTodo import MarkdownTodo
 from modules.Muspy import Muspy
 from modules.SociaalWerker import SociaalWerker
 from modules.LastFmRecommendation import LastFmRecommendation
+from modules.Syncthing import Syncthing

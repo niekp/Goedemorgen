@@ -92,6 +92,13 @@
 			"Broeder": "2d",
 		}
 	},
+	"Syncthing": {
+		"_comment": "Dit is een dure actie aan beide kanten van de API. Gebruik alleen op folders met weinig files.",
+		"apikey": "XXX",
+		"host": "localhost",
+		"port": 8384,
+		"folders": ["folder-id", "other-folder-id"]
+	},
 	"Email": {
 		"emailadres": "email@domain.com"
 	},

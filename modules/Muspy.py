@@ -14,7 +14,7 @@ class Muspy(_Module):
 
 		config = config_full["Muspy"]
 
-		filename = "{0}/{1}.db".format(config_full["Runtime"]["userdir"], config_full["Runtime"]["user"])
+		filename = "{0}/muspy.db".format(config_full["Runtime"]["userdir"])
 
 		if not os.path.exists(filename):
 			self.conn = sqlite3.connect(filename)

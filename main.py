@@ -93,6 +93,9 @@ for user in users:
 		if "LastFmRecommendation" in config:
 			modules.append(LastFmRecommendation(config))
 
+		if "Syncthing" in config:
+			modules.append(Syncthing(config))
+
 		
 		#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 		text = ""

@@ -13,6 +13,7 @@ Een goedemorgen bericht om de dag te starten. De wordt opgebouwd uit een config 
 - Herinnering aan een random last.fm artiest als muziek tip
 - Via config file instelbaar
 - Bericht wordt via de mail of pushbullet afgeleverd
+- Nieuwe files in syncthing folder
 
 ## Todo
 - [ ] Weer en agenda combineren
@@ -32,4 +33,5 @@ pip3 install pytz
 pip3 install pushbullet.py
 pip3 install feedparser
 pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+pip3 install syncthing
 ```

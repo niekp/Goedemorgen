@@ -11,17 +11,18 @@ class Email:
 
 	def Send(self, text):
 		# Geheimen inladen
-		domain = self.config["Runtime"]["secrets"]["email_domain"]
+		smtp = self.config["Runtime"]["secrets"]["email_server"]
+		user = self.config["Runtime"]["secrets"]["email_username"]
 		password = self.config["Runtime"]["secrets"]["email_password"]
 
 		now = f.Now(self.config)
 
 		# Verbind met mailserver
-		mailserver = smtplib.SMTP("mail." + domain);
+		mailserver = smtplib.SMTP(smtp);
 		mailserver.ehlo();
 		mailserver.starttls();
 		mailserver.ehlo();
-		mailserver.login('noreply@'+ domain, password);
+		mailserver.login(user, password);
 
 		# Mailbericht opbouwen
 		message = MIMEMultipart('alternative')
@@ -29,14 +30,14 @@ class Email:
 		goede = f.Goede(self.config)
 		
 		message['Subject'] = goede
-		message['From'] = goede + " <noreply@" + domain + ">"
+		message['From'] = goede + " <" + user + ">"
 		message['To'] = self.emailadres
 
 		html = text
 		message.attach(MIMEText(html, "html", "utf-8"));
 
 		# E-mail versturen
-		mailserver.sendmail("noreply@" + domain, self.emailadres, message.as_string())
+		mailserver.sendmail(user, self.emailadres, message.as_string())
 
 		# Verbinding sluiten
 		mailserver.close();

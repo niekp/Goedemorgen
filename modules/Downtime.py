@@ -21,7 +21,7 @@ class Downtime(_Module):
 			if not server in config["servers"]:
 				continue
 
-			ping = f.GetDateTimeWithTZ(config_full, (datetime.datetime.fromtimestamp(servers[server]["ping"])))
+			ping = f.GetDateTimeWithTZ(config_full, (datetime.datetime.fromtimestamp(int(servers[server]["ping"]))))
 			diffhour = ((now - ping).total_seconds() / 60 / 60);
 
 			if (diffhour > int(config["servers"][server])):

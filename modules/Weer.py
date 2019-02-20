@@ -8,30 +8,26 @@ from modules import _Module
 
 class Weer(_Module):
 
-	def __init__(self, config_full):
-		self.hasText = True
-		self.text = "";
-		config = config_full["Weer"]
-
+	def Run(self):
 		# Een textfile met de API-key. Met name om de key uit git te houden, en niet te hardcoden.
-		apikey = config_full["Runtime"]["secrets"]["darksky_apikey"]
+		apikey = self.config_full["Runtime"]["secrets"]["darksky_apikey"]
 
 		temperatureKey = "temperature"
-		if 'gevoel' in config:
-			if config["gevoel"]:
+		if 'gevoel' in self.config:
+			if self.config["gevoel"]:
 				temperatureKey = "apparentTemperature"
 
 		# Cache de API verzoeken in een map per dag.
-		filename = "{0}/Weer{1}_{2}.json".format(config_full["Runtime"]["datadir"], str(config["lang"]), str(config["long"]))
+		filename = "{0}/Weer{1}_{2}.json".format(self.config_full["Runtime"]["datadir"], str(self.config["lang"]), str(self.config["long"]))
 
-		now = f.Now(config_full)
+		now = f.Now(self.config_full)
 
-		if os.path.exists(filename) and not config_full["Runtime"]["production"]: # Alleen cachen op test verzoeken, ik blijf toch wel onder de max api calls
+		if os.path.exists(filename) and not self.config_full["Runtime"]["production"]: # Alleen cachen op test verzoeken, ik blijf toch wel onder de max api calls
 			data = open(filename).read()
 
 		else:
 			# Bouw de URL voor de API-call op en maak een weer object
-			with urllib.request.urlopen("https://api.darksky.net/forecast/{0}/{1},{2}?units=si".format(apikey, str(config["lang"]), str(config["long"]))) as url:
+			with urllib.request.urlopen("https://api.darksky.net/forecast/{0}/{1},{2}?units=si".format(apikey, str(self.config["lang"]), str(self.config["long"]))) as url:
 				data = url.read()
 			
 			with open(filename, 'w') as outfile:
@@ -41,13 +37,13 @@ class Weer(_Module):
 		weather = json.loads(data)
 
 		# Weerbericht opbouwen op basis van voorkeurs tijden.
-		if "tijden" in config:
+		if "tijden" in self.config:
 			text_builder = ""
 
 			weekday = now.weekday()
 
 			# Wil je vandaag een voorspelling?
-			if str(weekday) in config["tijden"]:
+			if str(weekday) in self.config["tijden"]:
 
 				# Stats voor het advies
 				minTemp = 99
@@ -62,7 +58,7 @@ class Weer(_Module):
 					# Alleen de voorspelling van vandaag gebruiken
 					if day == now.day:
 						# Staat het uur in de gewenste tijden, en na het huidige uur?
-						if hour in config["tijden"][str(weekday)] and hour >= now.hour:
+						if hour in self.config["tijden"][str(weekday)] and hour >= now.hour:
 							# Text opbouwen per tijd.
 							text_builder += "Om {0} uur is het {1}°".format(hour, data[temperatureKey])
 							if (data["precipProbability"] >= 0.1):
@@ -85,10 +81,10 @@ class Weer(_Module):
 				if text_builder != "":
 					# Advies opbouwen
 					advies = ""
-					if "advies" in config:
-						for key in config["advies"]:
-							if minTemp >= config["advies"][key]["min"] and maxTemp <= config["advies"][key]["max"] and maxRegen <= config["advies"][key]["regen"]:
-								advies = config["advies"][key]["advies"]
+					if "advies" in self.config:
+						for key in self.config["advies"]:
+							if minTemp >= self.config["advies"][key]["min"] and maxTemp <= self.config["advies"][key]["max"] and maxRegen <= self.config["advies"][key]["regen"]:
+								advies = self.config["advies"][key]["advies"]
 								break
 
 
@@ -113,8 +109,3 @@ class Weer(_Module):
 				weather["daily"]["data"][0]["temperatureLow"], 
 				weather["daily"]["data"][0]["temperatureHigh"])
 
-	def HasText(self):
-		return super(Weer, self).HasText()
-
-	def GetText(self):
-		return super(Weer, self).GetText()

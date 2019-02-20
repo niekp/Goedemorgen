@@ -1,37 +1,23 @@
 import datetime, json
 from modules import _Module
 from syncthing import Syncthing as SyncthingWrapper
+from lib import Functions as f
 import os
 import sqlite3
 
 class Syncthing(_Module):
 
-	def __init__(self, config_full):
-		self.hasText = False
-		self.text = ""
-
-		config = config_full["Syncthing"]
-
+	def Run(self):
 		# Load the syncthing API
-		s = SyncthingWrapper(config["apikey"], config["host"], str(config["port"]))
+		s = SyncthingWrapper(self.config["apikey"], self.config["host"], str(self.config["port"]))
 
 		# Load a database to keep the status
-		filename = "{0}/syncthing.db".format(config_full["Runtime"]["userdir"])
-
-		if not os.path.exists(filename):
-			self.conn = sqlite3.connect(filename)
-			c = self.conn.cursor()
-
-			# Bij de eerste connect een table maken
-			c.execute("CREATE TABLE Syncthing (folder text, file text, modified_date text)")
-
-		else:
-			self.conn = sqlite3.connect(filename)
-			c = self.conn.cursor()
+		conn = f.getDatabase(self.config_full, "syncthing", "CREATE TABLE Syncthing (folder text, file text, modified_date text)")
+		cursor = conn.cursor()
 
 		folders_metadata = s.system.config()["folders"]
 		
-		for folder_id in config["folders"]:
+		for folder_id in self.config["folders"]:
 			# Default label als de folder label niet gevonden kan worden
 			label = "Nieuwe bestanden"
 
@@ -43,8 +29,6 @@ class Syncthing(_Module):
 			# Load all filenames with API
 			for file, metadata in s.database.browse(folder_id).items():
 				modified_date = metadata[0]
-
-				cursor = self.conn.cursor()
 
 				# Check if the notification for this file has already been sent
 				cursor.execute("SELECT file FROM Syncthing WHERE folder = ? AND file = ?", (folder_id, file,))
@@ -61,13 +45,8 @@ class Syncthing(_Module):
 					self.text += (file + "<br />")
 					self.hasText = True
 
-				cursor.close()
+			
+		cursor.close()
 
 		# Opslaan
-		self.conn.commit()
-
-	def HasText(self):
-		return super(Syncthing, self).HasText()
-
-	def GetText(self):
-		return super(Syncthing, self).GetText()
+		conn.commit()

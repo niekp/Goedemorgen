@@ -5,23 +5,19 @@ from modules import _Module
 
 class MarkdownTodo(_Module):
 
-	def __init__(self, config_full):
-		self.hasText = False
-		self.text = "";
-
-		config = config_full["MarkdownTodo"]
-		now = f.Now(config_full)
+	def Run(self):
+		now = f.Now(self.config_full)
 		dag = now.strftime("%A").lower()
 
 		# Url checken en eventueel fixen zodat ik folder+file kan doen
-		if config["folder"][-1:] != "/":
-			config["folder"] += "/"
+		if self.config["folder"][-1:] != "/":
+			self.config["folder"] += "/"
 
-		if "weekly" in config:
-			if config["weekly"][:1] == "/":
-				config["weekly"] = config["weekly"][1:]
+		if "weekly" in self.config:
+			if self.config["weekly"][:1] == "/":
+				self.config["weekly"] = self.config["weekly"][1:]
 
-			weekly_url = config["folder"] + config["weekly"]
+			weekly_url = self.config["folder"] + self.config["weekly"]
 
 			weekly_url = weekly_url.replace("[year]", "[jaar]")
 			weekly_url = weekly_url.replace("[week]", str(now.isocalendar()[1]))
@@ -85,12 +81,6 @@ class MarkdownTodo(_Module):
 
 			# Omzetten naar HTML gezien main dat verwacht.
 			self.text = f.plain2hml(self.text).rstrip()
-
-	def HasText(self):
-		return super(MarkdownTodo, self).HasText()
-
-	def GetText(self):
-		return super(MarkdownTodo, self).GetText()
 
 	def FilterDone(self, text):
 		textOut = ""

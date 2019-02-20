@@ -6,13 +6,8 @@ from modules import _Module
 
 class SociaalWerker(_Module):
 
-	def __init__(self, config_full):
-		self.hasText = False
-		self.text = "";
-
-		self.config = config_full["SociaalWerker"]
-		self.datafile = "{0}/sociaalwerker.json".format(config_full["Runtime"]["userdir"])
-
+	def Run(self):
+		self.datafile = "{0}/sociaalwerker.json".format(self.config_full["Runtime"]["userdir"])
 
 		# Werk data bij
 		self.Update()
@@ -45,7 +40,7 @@ class SociaalWerker(_Module):
 				self.text += "Al {0} dagen geen contact gehad met {1}\n".format(round(last_message_diff / 60 / 60 / 24, 2), persoon)
 
 		# In productie, verwijder de rauwe notificatie gegevens.
-		if config_full["Runtime"]["production"]:
+		if self.config_full["Runtime"]["production"]:
 			if "clearURL" in self.config:
 				with urllib.request.urlopen(self.config["clearURL"]) as url:
 					data = url.read()
@@ -85,9 +80,3 @@ class SociaalWerker(_Module):
 		# Schrijf de datafile weg
 		with open(self.datafile, 'w') as outfile:  
 			json.dump(feitjes, outfile)
-
-	def HasText(self):
-		return super(SociaalWerker, self).HasText()
-
-	def GetText(self):
-		return super(SociaalWerker, self).GetText()

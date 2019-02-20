@@ -4,20 +4,16 @@ from random import randint
 
 class LastFmRecommendation(_Module):
 
-	config_full = None
-
-	def __init__(self, config_full):
-		self.config_full = config_full
-
+	def Run(self):
 		# If there isn't a preset 'top' then generate it
-		if "top" not in config_full["LastFmRecommendation"]:
+		if "top" not in self.config:
 			# Load the first page to get the pagecount
 			totalPages = int(self.GetArtist(1)['@attr']['totalPages'])
 			# Get a random artist from the first 25% of top artists.
 			pageSet = int(totalPages / 4)
 
 		else:
-			pageSet = int(config_full["LastFmRecommendation"]["top"])
+			pageSet = int(self.config["top"])
 
 		# Generate a random number in the pageset (preset or generated)
 		random = randint(1, pageSet)

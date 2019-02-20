@@ -1,4 +1,4 @@
-import pytz, datetime
+import pytz, datetime, os, sqlite3
 
 class Functions:
 	
@@ -22,22 +22,22 @@ class Functions:
 		return text
 
 
-	def GetTZ(config):
-		if 'TZ' in config:
-			tz = pytz.timezone(config["TZ"])
+	def GetTZ(config_full):
+		if 'TZ' in config_full:
+			tz = pytz.timezone(config_full["TZ"])
 		else:
 			tz = pytz.timezone("Europe/Amsterdam")
 
 		return tz
 
-	def Now(config):
-		return datetime.datetime.now().astimezone(Functions.GetTZ(config))
+	def Now(config_full):
+		return datetime.datetime.now().astimezone(Functions.GetTZ(config_full))
 
-	def GetDateTimeWithTZ(config, dt):
-		return dt.astimezone(Functions.GetTZ(config))
+	def GetDateTimeWithTZ(config_full, dt):
+		return dt.astimezone(Functions.GetTZ(config_full))
 
-	def Goede(config):
-		now = Functions.Now(config)
+	def Goede(config_full):
+		now = Functions.Now(config_full)
 		goede = ""
 		if now.hour >= 19:
 			return "Goedenavond"
@@ -46,3 +46,19 @@ class Functions:
 		else:
 			return "Goedemorgen"
 
+
+	def getDatabase(config_full, database_name, create_query):
+		# Load a database to keep the status
+		filename = "{0}/{1}.db".format(config_full["Runtime"]["userdir"], database_name)
+
+		if not os.path.exists(filename):
+			conn = sqlite3.connect(filename)
+			c = conn.cursor()
+			# Bij de eerste connect een table maken
+			c.execute(create_query)
+
+			conn.commit()
+
+			return conn
+		else:
+			return sqlite3.connect(filename)

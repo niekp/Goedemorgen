@@ -31,19 +31,14 @@ from modules import _Module
 # Google credentials: https://developers.google.com/calendar/quickstart/python
 class Agenda(_Module):
 
-	def __init__(self, config_full):
-		self.hasText = False
-		self.text = "";
-
-		if config_full["Agenda"]["credentials.json"]:
-			self.Google(config_full)
+	def Run(self):
+		if self.config_full["Agenda"]["credentials.json"]:
+			self.Google()
 		else:
-			self.Caldav(config_full)
+			self.Caldav()
 
-	def Google(self, config_full):
-		config = config_full["Agenda"]
-
-		creds = self.GetGoogleCreds(config_full)
+	def Google(self):
+		creds = self.GetGoogleCreds()
 
 		service = build('calendar', 'v3', credentials=creds)
 
@@ -69,16 +64,14 @@ class Agenda(_Module):
 
 		return datetime.strptime('+'.join(dt_array), "%Y-%m-%dT%H:%M:%S%z") 
 
-	def GetGoogleCreds(self, config_full):
-		config = config_full["Agenda"]
-
-		pickle_filename = "{0}/token.pickle".format(config_full["Runtime"]["userdir"])
-		credentials_filename = "{0}/credentials.json".format(config_full["Runtime"]["userdir"])
+	def GetGoogleCreds(self):
+		pickle_filename = "{0}/token.pickle".format(self.config_full["Runtime"]["userdir"])
+		credentials_filename = "{0}/credentials.json".format(self.config_full["Runtime"]["userdir"])
 
 		SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 		
 		with open(credentials_filename, 'w') as outfile:
-			json.dump(config["credentials.json"], outfile)
+			json.dump(self.config["credentials.json"], outfile)
 		
 		creds = None
 		if os.path.exists(pickle_filename):
@@ -100,11 +93,9 @@ class Agenda(_Module):
 
 		return creds
 
-	def Caldav(self, config_full):
-		config = config_full["Agenda"]
-
+	def Caldav(self):
 		# Verbinding maken met CalDav agenda
-		client = caldav.DAVClient(config["url"])
+		client = caldav.DAVClient(self.config["url"])
 		principal = client.principal()
 		calendars = principal.calendars()
 
@@ -115,10 +106,10 @@ class Agenda(_Module):
 			calendar_name = calendar.get_properties([dav.DisplayName(),])["{DAV:}displayname"]
 
 			# Alleen doorgaan indien de agenda in de 'calendars' config regel staat
-			if calendar_name in config["calendars"]:
+			if calendar_name in self.config["calendars"]:
 				first = True
 
-				now = f.Now(config_full)
+				now = f.Now(self.config_full)
 
 				# Evenementen voor vandaag zoeken, met een beetje buffer terug in de tijd.
 				results = calendar.date_search(now - timedelta(hours=2), now + timedelta(days=1))
@@ -156,9 +147,3 @@ class Agenda(_Module):
 
 		if not first_all:
 			self.hasText = True
-
-	def HasText(self):
-		return super(Agenda, self).HasText()
-
-	def GetText(self):
-		return super(Agenda, self).GetText()

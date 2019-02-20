@@ -2,7 +2,9 @@
 import os, datetime, json, locale
 import sys, socket
 from os import walk
+from os.path import dirname, basename, isfile
 import pytz
+import glob
 
 from Config import Config
 
@@ -63,41 +65,17 @@ for user in users:
 		with open('secrets/secrets.json') as secrets:    
 			config['Runtime'] = { "datadir": datadir, "userdir": userdir, "secrets": json.load(secrets), "production": prod, "user": user }
 
-		# Modules toevoegen
+		# Dynamisch modules toevoegen
 		modules = []
 
-		if "Afval" in config:
-			modules.append(Afval(config))
-
-		if "Weer" in config:
-			modules.append(Weer(config))
-
-		if "Agenda" in config:
-			modules.append(Agenda(config))
-
-		if "MarkdownTodo" in config:
-			modules.append(MarkdownTodo(config))
-
-		if "Muspy" in config:
-			modules.append(Muspy(config))
-
-		if "Downtime" in config:
-			modules.append(Downtime(config))
-
-		if "LastFmDisconnected" in config:
-			modules.append(LastFmDisconnected(config))
-
-		if "SociaalWerker" in config:
-			modules.append(SociaalWerker(config))
-
-		if "LastFmRecommendation" in config:
-			modules.append(LastFmRecommendation(config))
-
-		if "Syncthing" in config:
-			modules.append(Syncthing(config))
-
+		for file in os.listdir("modules"):
+			if not file.endswith('__init__.py') and not file.endswith('_Module.py') and file.endswith('.py'):
+				module = basename(file)[:-3]
+				if module in config:
+					eval("modules.append(" + module + "." + module + "(config))");
 		
 		#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+		
 		text = ""
 		has_text = False
 

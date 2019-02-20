@@ -3,18 +3,14 @@ from modules import _Module
 
 class LastFmDisconnected(_Module):
 
-	def __init__(self, config_full):
-		self.hasText = False
-		self.text = "";
+	def Run(self):
+		apikey = self.config_full["Runtime"]["secrets"]["lastfm_apikey"]
 
-		config = config_full["LastFmDisconnected"]
-		apikey = config_full["Runtime"]["secrets"]["lastfm_apikey"]
-
-		user = config["username"]
+		user = self.config["username"]
 
 		hours = 0
 		try:
-			hours = int(config["hours"])
+			hours = int(self.config["hours"])
 		except Exception as e:
 			pass
 
@@ -49,10 +45,3 @@ class LastFmDisconnected(_Module):
 			if (diffhour > hours):
 				self.text = user + " heeft al " + str(round(diffhour, 2)) + " uur geen scrobbles.";
 				self.hasText = True
-
-
-	def HasText(self):
-		return super(LastFmDisconnected, self).HasText()
-
-	def GetText(self):
-		return super(LastFmDisconnected, self).GetText()

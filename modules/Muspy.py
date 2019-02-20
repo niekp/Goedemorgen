@@ -8,26 +8,13 @@ from modules import _Module
 
 class Muspy(_Module):
 
-	def __init__(self, config_full):
-		self.hasText = False
-		self.text = "";
-
-		config = config_full["Muspy"]
-
-		filename = "{0}/muspy.db".format(config_full["Runtime"]["userdir"])
-
-		if not os.path.exists(filename):
-			self.conn = sqlite3.connect(filename)
-			c = self.conn.cursor()
-			# Bij de eerste connect een table maken
-			c.execute("CREATE TABLE Muspy (id text, title text, updated text, notified int)")
-
-		else:
-			self.conn = sqlite3.connect(filename)
-			c = self.conn.cursor()
+	def Run(self):
+		# Load the database
+		self.conn = f.getDatabase(self.config_full, "muspy", "CREATE TABLE Muspy (id text, title text, updated text, notified int)")
+		cursor = self.conn.cursor()
 
 		# Haal de feed op
-		feed = feedparser.parse(config["feed"])
+		feed = feedparser.parse(self.config["feed"])
 		items = []
 		for item in feed["items"]:
 			# Werk database bij
@@ -38,7 +25,7 @@ class Muspy(_Module):
 
 		c_update = self.conn.cursor()
 		# Zoek alle ongemelde releases voor vandaag, of het verleden. Sqlite heeft geen date functies, maar zo kan het ook
-		results = c.execute("SELECT id, title, updated FROM Muspy WHERE substr(updated,0, 5) || substr(updated, 6, 2) || substr(updated, 9, 2) < ? and notified = 0;", (datetime.datetime.now().strftime("%Y%m%d"),))
+		results = cursor.execute("SELECT id, title, updated FROM Muspy WHERE substr(updated,0, 5) || substr(updated, 6, 2) || substr(updated, 9, 2) < ? and notified = 0;", (datetime.datetime.now().strftime("%Y%m%d"),))
 		for release in results:
 			self.hasText = True
 			self.text += release[1] + "<br/>"
@@ -52,7 +39,7 @@ class Muspy(_Module):
 			self.text = "<h2>Nieuwe releases</h2>" + self.text
 
 
-		c.close()
+		cursor.close()
 		c_update.close()
 		self.conn.close()
 
@@ -77,9 +64,3 @@ class Muspy(_Module):
 					cursor.execute("update Muspy SET updated = ?, title = ?, notified = ? where id = ? or title = ?", (updated, title, 0, id, title))
 
 		cursor.close()
-
-	def HasText(self):
-		return super(Muspy, self).HasText()
-
-	def GetText(self):
-		return super(Muspy, self).GetText()

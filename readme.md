@@ -13,7 +13,8 @@ Een goedemorgen bericht om de dag te starten. De wordt opgebouwd uit een config 
 - Herinnering aan een random last.fm artiest als muziek tip
 - Via config file instelbaar
 - Bericht wordt via de mail of pushbullet afgeleverd
-- Nieuwe files in syncthing folder
+- Nieuwe bestanden in syncthing folder
+- Nieuwe podcasts beschikbaar in subsonic
 
 ## Todo
 - [ ] Weer en agenda combineren

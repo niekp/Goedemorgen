@@ -6,6 +6,11 @@
 		"0": "plastic",
 		"3": "papier"
 	},
+	"Subsonic": {
+		"url": "https://example.com",
+		"user": "user",
+		"password": "password"
+	},
 	"Downtime": {
 		"_comment": "Zie /php_helpers/pingserver/ voor de 'server' opzet.",
 		"_comment": "Link het json bestand hier en geef per server op hoeveel uur deze stil mag zijn.",

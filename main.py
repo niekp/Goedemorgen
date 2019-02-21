@@ -90,7 +90,8 @@ for user in users:
 		while text[-5:] == "<br/>":
 			text = text[:-5]
 
-		print(f.html2plain(text))
+		if not prod:
+			print(f.html2plain(text))
 
 		if "Email" in config and has_text:
 			email = Email(config)

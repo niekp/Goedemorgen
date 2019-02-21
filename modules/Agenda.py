@@ -54,15 +54,18 @@ class Agenda(_Module):
 
 			for event in events:
 				start = self.convertDate(event['start'].get('dateTime', event['start'].get('date')))
-				self.text += "{0} {1}<br/>".format(start.strftime("%A %H:%M"), event['summary'])
+				self.text += "{0} {1}<br/>".format(start, event['summary'])
 
 	# De datum komt als yyyy-mm-ddThh:mm:ss+hh:mm:ss binnen, maar strftime vind dat niet leuk. Dus sloop de : uit de timezone
 	def convertDate(self, dt):
 		dt_array = dt.split("+")
-		if dt_array[1]:
-			dt_array[1] = dt_array[1].replace(':', '')
+		if len(dt_array) == 2:
+			if dt_array[1]:
+				dt_array[1] = dt_array[1].replace(':', '')
 
-		return datetime.strptime('+'.join(dt_array), "%Y-%m-%dT%H:%M:%S%z") 
+			return datetime.strptime('+'.join(dt_array), "%Y-%m-%dT%H:%M:%S%z").strftime("%A %H:%M")
+		
+		return datetime.strptime(dt, "%Y-%m-%d").strftime("%A")
 
 	def GetGoogleCreds(self):
 		pickle_filename = "{0}/token.pickle".format(self.config_full["Runtime"]["userdir"])

@@ -20,5 +20,5 @@ class Downtime(_Module):
 			diffhour = ((now - ping).total_seconds() / 60 / 60);
 
 			if (diffhour > int(self.config["servers"][server])):
-				self.text = server + " is al " + str(round(diffhour, 2)) + " uur stil.";
+				self.text += server + " is al " + str(round(diffhour, 2)) + " uur stil.<br />";
 				self.hasText = True

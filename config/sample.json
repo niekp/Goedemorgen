@@ -104,6 +104,9 @@
 		"port": 8384,
 		"folders": ["folder-id", "other-folder-id"]
 	},
+	"ANWB": {
+		"roads": ["A4", "A50", "A28"]
+	},
 	"Email": {
 		"emailadres": "email@domain.com"
 	},

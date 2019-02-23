@@ -15,15 +15,10 @@ Een goedemorgen bericht om de dag te starten. De wordt opgebouwd uit een config 
 - Bericht wordt via de mail of pushbullet afgeleverd
 - Nieuwe bestanden in syncthing folder
 - Nieuwe podcasts beschikbaar in subsonic
-
-## Todo
-- [ ] Weer en agenda combineren
+- ANWB verkeersinformatie over een weg
 
 ## Ideeen
-- [ ] Top artiest last.fm gisteren
 - [ ] Nieuwe TV afleveringen vandaag / trakt of sonarr
-- [ ] Nieuwe afleveringen van podcast, of elke RSS-feed is dan mogelijk
-- [ ] ANWB API, file informatie
 
 ## Dependencies
 python3.6

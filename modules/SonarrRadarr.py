@@ -1,5 +1,6 @@
 import json
 import urllib
+from lib import Functions as f
 from modules import _Module
 
 class SonarrRadarr(_Module):

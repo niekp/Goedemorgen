@@ -107,6 +107,16 @@
 	"ANWB": {
 		"roads": ["A4", "A50", "A28"]
 	},
+	"SonarrRadarr": {
+		"sonarr": {
+			"url": "http://localhost:8989/api",
+			"apikey": "key"
+		}, 
+		"radarr": {
+			"url": "http://localhost:7878/api",
+			"apikey": "key"
+		}
+	},
 	"Email": {
 		"emailadres": "email@domain.com"
 	},

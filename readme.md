@@ -16,9 +16,7 @@ Een goedemorgen bericht om de dag te starten. De wordt opgebouwd uit een config 
 - Nieuwe bestanden in syncthing folder
 - Nieuwe podcasts beschikbaar in subsonic
 - ANWB verkeersinformatie over een weg
-
-## Ideeen
-- [ ] Nieuwe TV afleveringen vandaag / trakt of sonarr
+- Lijst van nieuw gedownloade afleveringen of films (automatisch via sonarr & radarr)
 
 ## Dependencies
 python3.6

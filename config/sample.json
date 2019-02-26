@@ -107,6 +107,23 @@
 	"ANWB": {
 		"roads": ["A4", "A50", "A28"]
 	},
+	"ANWB": {
+		"_comment": "Snelwegen zijn lang, geef met de optionele latitude en longitude aan in welke range de melding moet plaatsvinden",
+		"_comment2": "https://www.mapdevelopers.com/draw-circle-tool.php",
+		"roads": {
+			"A28": {
+				"latitude": 53.0000, 
+				"longitude": 6.0000,
+				"km": 12
+			},
+			"A4": {
+				"latitude": 52.5000, 
+				"longitude": 5.7000,
+				"km": 12
+			},
+			"a50": {}
+		}
+	},
 	"SonarrRadarr": {
 		"sonarr": {
 			"url": "http://localhost:8989/api",

@@ -24,13 +24,12 @@ prod = True
 if socket.gethostname() == "Swifty":
 	users.append("test")
 	prod = False
-elif socket.gethostname() == "webserver":
+else:
 	for (dirpath, dirnames, filenames) in walk("config"):
 		for filename in filenames:
 			conf_file = filename.replace(".json", "")
 			if (conf_file != "test" and conf_file != "sample"):
 				users.append(conf_file)
-
 
 for user in users:
 	# Config inlezen

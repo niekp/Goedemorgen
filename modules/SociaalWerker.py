@@ -43,7 +43,7 @@ class SociaalWerker(_Module):
 		if self.config_full["Runtime"]["production"]:
 			if "clearURL" in self.config:
 				with urllib.request.urlopen(self.config["clearURL"]) as url:
-					data = url.read()
+					url.read()
 
 
 		

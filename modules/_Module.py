@@ -1,33 +1,32 @@
 #from abc import abc, ABCMeta, abstractmethod
 import abc
 
+
 class _Module(metaclass=abc.ABCMeta):
-	config_full = None
-	config = None
+    config_full = None
+    config = None
 
-	def __init__(self, config_full):
-		self.hasText = False
-		self.text = "";
-		self.config_full = config_full
+    def __init__(self, config_full):
+        self.hasText = False
+        self.text = ""
+        self.config_full = config_full
 
-		classname = self.__class__.__name__
-		if classname in config_full:
-			self.config = config_full[classname]
+        classname = self.__class__.__name__
+        if classname in config_full:
+            self.config = config_full[classname]
 
-		try:
-			self.Run()
-		except:
-			self.hasText = True
-			self.text = classname + ": Error"
-		
+        try:
+            self.Run()
+        except:
+            self.hasText = True
+            self.text = classname + ": Error"
 
+    @abc.abstractmethod
+    def Run(self):
+        raise NotImplementedError()
 
-	@abc.abstractmethod
-	def Run(self):
-		raise NotImplementedError()
+    def HasText(self):
+        return self.hasText
 
-	def HasText(self):
-		return self.hasText
-
-	def GetText(self):
-		return self.text.rstrip()
+    def GetText(self):
+        return self.text.rstrip()

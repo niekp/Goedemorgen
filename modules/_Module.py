@@ -14,7 +14,12 @@ class _Module(metaclass=abc.ABCMeta):
 		if classname in config_full:
 			self.config = config_full[classname]
 
-		self.Run()
+		try:
+			self.Run()
+		except:
+			self.hasText = True
+			self.text = classname + ": Error"
+		
 
 
 	@abc.abstractmethod

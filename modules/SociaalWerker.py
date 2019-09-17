@@ -65,11 +65,8 @@ class SociaalWerker(_Module):
 
 		for notification in notifications:
 			# Parse alleen whatsapp notificaties
-			if notifications[notification]["AppName"] == "WhatsApp" or notifications[notification]["AppName"] == "Signal" or notifications[notification]["AppName"] == "Riot.im":
+			if notifications[notification]["AppName"] == "com.whatsapp" or notifications[notification]["AppName"] == "com.thoughtcrime.securesms":
 				name = notifications[notification]["NotificationTitle"]
-
-				if notifications[notification]["AppName"] == "Riot.im":
-					name = name.replace(' (WA)', '') # TODO: regex voor `.(..)`
 
 				# Staat de persoon al in de data?
 				if name in feitjes:
